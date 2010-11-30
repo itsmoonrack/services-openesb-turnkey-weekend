@@ -1,44 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<casa xmlns="http://java.sun.com/xml/ns/casa" xmlns:ns1="http://j2ee.netbeans.org/wsdl/BoxService/boxServiceWSDL" xmlns:ns2="http://j2ee.netbeans.org/wsdl/BoxService/JavaBoxDB" xmlns:ns3="http://enterprise.netbeans.org/bpel/BoxService/CreateBox" xmlns:xlink="http://www.w3.org/2000/xlink">
+<casa xmlns="http://java.sun.com/xml/ns/casa" xmlns:ns1="http://j2ee.netbeans.org/wsdl/BoxService/JavaBoxDB" xmlns:ns2="http://j2ee.netbeans.org/wsdl/BoxService" xmlns:ns3="http://enterprise.netbeans.org/bpel/BoxService/CreateBox" xmlns:xlink="http://www.w3.org/2000/xlink">
     <endpoints>
-        <endpoint endpoint-name="adminPort" interface-name="ns1:administrator" name="endpoint1" service-name="ns1:boxService"/>
-        <endpoint endpoint-name="clientPort" interface-name="ns1:client" name="endpoint2" service-name="ns1:boxService"/>
-        <endpoint endpoint-name="port" interface-name="ns2:jdbcPortType" name="endpoint3" service-name="ns2:service"/>
-        <endpoint display-name="Administrator" endpoint-name="administratorRole_myRole" file-path="CreateBox.bpel" interface-name="ns1:administrator" name="endpoint4" process-name="CreateBox" service-name="ns3:Administrator"/>
-        <endpoint display-name="JavaDB" endpoint-name="jdbcPortTypeRole_partnerRole" file-path="CreateBox.bpel" interface-name="ns2:jdbcPortType" name="endpoint5" process-name="CreateBox" service-name="ns3:JavaDB"/>
+        <endpoint endpoint-name="port" interface-name="ns1:jdbcPortType" name="endpoint1" service-name="ns1:service"/>
+        <endpoint endpoint-name="adminPort" interface-name="ns2:administrator" name="endpoint2" service-name="ns2:BoxService"/>
+        <endpoint display-name="Administrator" endpoint-name="administratorRole_myRole" file-path="CreateBox.bpel" interface-name="ns2:administrator" name="endpoint3" process-name="CreateBox" service-name="ns3:Administrator"/>
+        <endpoint display-name="JavaDB" endpoint-name="jdbcPortTypeRole_partnerRole" file-path="CreateBox.bpel" interface-name="ns1:jdbcPortType" name="endpoint4" process-name="CreateBox" service-name="ns3:JavaDB"/>
     </endpoints>
     <service-units>
         <service-engine-service-unit artifacts-zip="BoxService.jar" component-name="sun-bpel-engine" defined="true" description="Represents this Service Unit" internal="true" name="ProcessModel-BoxService" unit-name="BoxService" unknown="false" x="159" y="99">
-            <provides endpoint="endpoint4"/>
-            <consumes endpoint="endpoint5"/>
+            <provides endpoint="endpoint3"/>
+            <consumes endpoint="endpoint4"/>
         </service-engine-service-unit>
         <binding-component-service-unit artifacts-zip="sun-database-binding.jar" component-name="sun-database-binding" description="Represents this Service Unit" name="ProcessModel-sun-database-binding" unit-name="sun-database-binding">
             <ports>
-                <port x="67" y="39">
+                <port x="67" y="118">
                     <link xlink:href="../jbiServiceUnits/BoxService/DB/JavaBoxDB.wsdl#xpointer(/definitions/service[@name='service']/port[@name='port'])" xlink:type="simple"/>
-                    <consumes endpoint="endpoint3"/>
-                    <provides endpoint="endpoint3"/>
-                </port>
-            </ports>
-        </binding-component-service-unit>
-        <binding-component-service-unit artifacts-zip="sun-http-binding.jar" component-name="sun-http-binding" description="Represents this Service Unit" name="ProcessModel-sun-http-binding" unit-name="sun-http-binding">
-            <ports>
-                <port x="67" y="224">
-                    <link xlink:href="../jbiServiceUnits/BoxService/BoxService.wsdl#xpointer(/definitions/service[@name='boxService']/port[@name='clientPort'])" xlink:type="simple"/>
-                    <consumes endpoint="endpoint2"/>
-                    <provides endpoint="endpoint2"/>
-                </port>
-                <port x="67" y="145">
-                    <link xlink:href="../jbiServiceUnits/BoxService/BoxService.wsdl#xpointer(/definitions/service[@name='boxService']/port[@name='adminPort'])" xlink:type="simple"/>
                     <consumes endpoint="endpoint1"/>
                     <provides endpoint="endpoint1"/>
                 </port>
             </ports>
         </binding-component-service-unit>
+        <binding-component-service-unit artifacts-zip="sun-http-binding.jar" component-name="sun-http-binding" description="Represents this Service Unit" name="ProcessModel-sun-http-binding" unit-name="sun-http-binding">
+            <ports>
+                <port x="67" y="39">
+                    <link xlink:href="../jbiServiceUnits/BoxService/BoxService.wsdl#xpointer(/definitions/service[@name='BoxService']/port[@name='adminPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint2"/>
+                    <provides endpoint="endpoint2"/>
+                </port>
+            </ports>
+        </binding-component-service-unit>
     </service-units>
     <connections>
-        <connection consumer="endpoint5" provider="endpoint3" state="unchanged"/>
-        <connection consumer="endpoint1" provider="endpoint4" state="unchanged"/>
+        <connection consumer="endpoint4" provider="endpoint1" state="unchanged"/>
+        <connection consumer="endpoint2" provider="endpoint3" state="unchanged"/>
     </connections>
     <porttypes>
         <link xlink:href="../jbiServiceUnits/BoxService/BoxService.wsdl#xpointer(/definitions/portType[@name='client'])" xlink:type="simple"/>
@@ -51,7 +45,7 @@
         <link xlink:href="../jbiServiceUnits/BoxService/DB/JavaBoxDB.wsdl#xpointer(/definitions/binding[@name='binding'])" xlink:type="simple"/>
     </bindings>
     <services>
-        <link xlink:href="../jbiServiceUnits/BoxService/BoxService.wsdl#xpointer(/definitions/service[@name='boxService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/BoxService/BoxService.wsdl#xpointer(/definitions/service[@name='BoxService'])" xlink:type="simple"/>
         <link xlink:href="../jbiServiceUnits/BoxService/DB/JavaBoxDB.wsdl#xpointer(/definitions/service[@name='service'])" xlink:type="simple"/>
     </services>
     <regions>

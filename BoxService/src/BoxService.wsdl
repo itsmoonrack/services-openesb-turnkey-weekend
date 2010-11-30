@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions name="BoxService" targetNamespace="http://j2ee.netbeans.org/wsdl/BoxService/boxServiceWSDL"
+<definitions name="BoxService" targetNamespace="http://j2ee.netbeans.org/wsdl/BoxService"
     xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService/boxServiceWSDL" xmlns:ns="http://xml.netbeans.org/schema/boxServiceSchema" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService" xmlns:ns="http://xml.netbeans.org/schema/BoxService" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
     <types>
-        <xsd:schema targetNamespace="http://j2ee.netbeans.org/wsdl/BoxService/boxServiceWSDL">
-            <xsd:import namespace="http://xml.netbeans.org/schema/boxServiceSchema" schemaLocation="BoxService.xsd"/>
+        <xsd:schema targetNamespace="http://j2ee.netbeans.org/wsdl/BoxService">
+            <xsd:import namespace="http://xml.netbeans.org/schema/BoxService" schemaLocation="BoxService.xsd"/>
         </xsd:schema>
     </types>
     <message name="getMatchingBoxesRequest">
@@ -90,10 +90,10 @@
         <operation name="getMatchingBoxes">
             <soap:operation/>
             <input name="input1">
-                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/BoxService/boxServiceWSDL"/>
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/BoxService"/>
             </input>
             <output name="output1">
-                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/BoxService/boxServiceWSDL"/>
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/BoxService"/>
             </output>
         </operation>
         <operation name="reserveBox">
@@ -154,12 +154,12 @@
             </output>
         </operation>
     </binding>
-    <service name="boxService">
+    <service name="BoxService">
         <port name="clientPort" binding="tns:clientBinding">
-            <soap:address location="http://localhost:${HttpDefaultPort}/boxService/boxPort"/>
+            <soap:address location="http://localhost:${HttpDefaultPort}/BoxService/boxPort"/>
         </port>
         <port name="adminPort" binding="tns:administratorBinding">
-            <soap:address location="http://localhost:${HttpDefaultPort}/BoxService/boxServiceWSDL/adminPort"/>
+            <soap:address location="http://localhost:${HttpDefaultPort}/BoxService/adminPort"/>
         </port>
     </service>
     <plnk:partnerLinkType name="clientPartnerLink">
@@ -172,6 +172,7 @@ A partner link type characterizes the conversational relationship between two se
         <plnk:role name="administratorRole" portType="tns:administrator"/>
     </plnk:partnerLinkType>
 </definitions>
+
 
 
 
