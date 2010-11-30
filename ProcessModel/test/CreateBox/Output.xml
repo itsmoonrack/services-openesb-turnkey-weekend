@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xsi:schemaLocation="http://schemas.xmlsoap.org/soap/envelope/ http://schemas.xmlsoap.org/soap/envelope/">
   <SOAP-ENV:Body>
     <createBoxResponse xmlns:msgns="http://j2ee.netbeans.org/wsdl/BoxService/boxServiceWSDL">
-      <result>OK</result>
+      <result xmlns:msgns="http://j2ee.netbeans.org/wsdl/BoxService/JavaBoxDB" xmlns:ns0="http://j2ee.netbeans.org/wsdl/BoxService/boxServiceWSDL">
+        <part>1</part>
+      </result>
     </createBoxResponse>
   </SOAP-ENV:Body>
 </SOAP-ENV:Envelope>

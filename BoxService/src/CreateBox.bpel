@@ -22,7 +22,13 @@
         <variable name="NewBox" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService/boxServiceWSDL" messageType="tns:createBoxRequest"/>
     </variables>
     <sequence>
-        <receive name="receiveInput" createInstance="yes" partnerLink="Administrator" operation="createBox" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService/boxServiceWSDL" portType="tns:administrator" variable="NewBox"/>
+        <receive name="receiveInput" createInstance="yes" partnerLink="Administrator" operation="createBox" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService/boxServiceWSDL" portType="tns:administrator" variable="NewBox">
+            <sxt:trace>
+                <sxt:log level="info" location="onStart">
+                    <from>concat('Box Created', $NewBox.box/ns0:id)</from>
+                </sxt:log>
+            </sxt:trace>
+        </receive>
         <assign name="Assign1">
             <copy>
                 <from>$NewBox.box/ns0:address</from>
@@ -76,7 +82,7 @@
         <invoke name="Invoke1" partnerLink="JavaDB" operation="insert" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService/JavaBoxDB" portType="tns:jdbcPortType" inputVariable="InsertIn" outputVariable="InsertOut"/>
         <assign name="Assign2">
             <copy>
-                <from>'OK'</from>
+                <from variable="InsertOut" part="part"/>
                 <to variable="CreateBoxOut" part="result"/>
             </copy>
         </assign>
