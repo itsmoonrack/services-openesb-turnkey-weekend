@@ -1,0 +1,19 @@
+<soapenv:Envelope xsi:schemaLocation="http://schemas.xmlsoap.org/soap/envelope/ http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:box="http://j2ee.netbeans.org/wsdl/BoxService" xmlns:box1="http://xml.netbeans.org/schema/BoxService">
+  <soapenv:Body>
+    <box:createBox>
+      <box>
+        <box1:id>3</box1:id>
+        <box1:address>Test Address</box1:address>
+        <box1:startDate>2008-09-29T03:49:45</box1:startDate>
+        <box1:endDate>2014-09-19T01:18:33</box1:endDate>
+        <box1:description>This box is...</box1:description>
+        <box1:price>130</box1:price>
+        <box1:travel_id>1</box1:travel_id>
+        <box1:hotel_id>1</box1:hotel_id>
+        <box1:restaurant_id>1</box1:restaurant_id>
+        <box1:activity_id>1</box1:activity_id>
+        <box1:activity_type>horsing</box1:activity_type>
+      </box>
+    </box:createBox>
+  </soapenv:Body>
+</soapenv:Envelope>
