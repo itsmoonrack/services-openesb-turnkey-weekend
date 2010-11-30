@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process
+    name="CreateBox"
+    targetNamespace="http://enterprise.netbeans.org/bpel/BoxService/CreateBox"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/BoxService/CreateBox"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:sxed2="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2" xmlns:ns0="http://xml.netbeans.org/schema/boxServiceSchema" xmlns:ns1="http://j2ee.netbeans.org/xsd/tableSchema" xmlns:sxxf="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/XPathFunctions">
+    <import namespace="http://j2ee.netbeans.org/wsdl/BoxService/boxServiceWSDL" location="BoxService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://j2ee.netbeans.org/wsdl/BoxService/JavaBoxDB" location="DB/JavaBoxDB.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="JavaDB" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService/JavaBoxDB" partnerLinkType="tns:jdbcpartner" partnerRole="jdbcPortTypeRole"/>
+        <partnerLink name="Administrator" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService/boxServiceWSDL" partnerLinkType="tns:adminPartnerLink" myRole="administratorRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="InsertOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService/JavaBoxDB" messageType="tns:RetMsg"/>
+        <variable name="InsertIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService/JavaBoxDB" messageType="tns:inputMsg"/>
+        <variable name="CreateBoxOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService/boxServiceWSDL" messageType="tns:createBoxResponse"/>
+        <variable name="NewBox" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService/boxServiceWSDL" messageType="tns:createBoxRequest"/>
+    </variables>
+    <sequence>
+        <receive name="receiveInput" createInstance="yes" partnerLink="Administrator" operation="createBox" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService/boxServiceWSDL" portType="tns:administrator" variable="NewBox"/>
+        <assign name="Assign1">
+            <copy>
+                <from>$NewBox.box/ns0:address</from>
+                <to>$InsertIn.part/ns1:BOX_Record/ns1:LOCATION</to>
+            </copy>
+            <copy>
+                <from>$NewBox.box/ns0:description</from>
+                <to>$InsertIn.part/ns1:BOX_Record/ns1:DESCRIPTION</to>
+            </copy>
+            <copy>
+                <from>$NewBox.box/ns0:price</from>
+                <to>$InsertIn.part/ns1:BOX_Record/ns1:PRICE</to>
+            </copy>
+            <copy>
+                <from>$NewBox.box/ns0:travel_id</from>
+                <to>$InsertIn.part/ns1:BOX_Record/ns1:TRAVEL_ID</to>
+            </copy>
+            <copy>
+                <from>$NewBox.box/ns0:hotel_id</from>
+                <to>$InsertIn.part/ns1:BOX_Record/ns1:HOTEL_ID</to>
+            </copy>
+            <copy>
+                <from>$NewBox.box/ns0:restaurant_id</from>
+                <to>$InsertIn.part/ns1:BOX_Record/ns1:RESTAURANT_ID</to>
+            </copy>
+            <copy>
+                <from>$NewBox.box/ns0:activity_id</from>
+                <to>$InsertIn.part/ns1:BOX_Record/ns1:ACTIVITY_ID</to>
+            </copy>
+            <copy>
+                <from>$NewBox.box/ns0:activity_type</from>
+                <to>$InsertIn.part/ns1:BOX_Record/ns1:ACTIVITY_TYPE</to>
+            </copy>
+            <copy>
+                <from>substring-before($NewBox.box/ns0:startDate, 'T')</from>
+                <to>$InsertIn.part/ns1:BOX_Record/ns1:START_DATE</to>
+            </copy>
+            <copy>
+                <from>substring-after($NewBox.box/ns0:startDate, 'T')</from>
+                <to>$InsertIn.part/ns1:BOX_Record/ns1:START_TIME</to>
+            </copy>
+            <copy>
+                <from>substring-before($NewBox.box/ns0:endDate, 'T')</from>
+                <to>$InsertIn.part/ns1:BOX_Record/ns1:END_DATE</to>
+            </copy>
+            <copy>
+                <from>substring-after($NewBox.box/ns0:endDate, 'T')</from>
+                <to>$InsertIn.part/ns1:BOX_Record/ns1:END_TIME</to>
+            </copy>
+        </assign>
+        <invoke name="Invoke1" partnerLink="JavaDB" operation="insert" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService/JavaBoxDB" portType="tns:jdbcPortType" inputVariable="InsertIn" outputVariable="InsertOut"/>
+        <assign name="Assign2">
+            <copy>
+                <from>'OK'</from>
+                <to variable="CreateBoxOut" part="result"/>
+            </copy>
+        </assign>
+        <reply name="callbackAdmin" partnerLink="Administrator" operation="createBox" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService/boxServiceWSDL" portType="tns:administrator" variable="CreateBoxOut"/>
+    </sequence>
+</process>
+
+
+
+
+
+
+
