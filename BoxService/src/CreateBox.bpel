@@ -31,10 +31,6 @@
         </receive>
         <assign name="Assign1">
             <copy>
-                <from>$NewBox.box/ns0:address</from>
-                <to>$InsertIn.part/ns1:BOX_Record/ns1:LOCATION</to>
-            </copy>
-            <copy>
                 <from>$NewBox.box/ns0:description</from>
                 <to>$InsertIn.part/ns1:BOX_Record/ns1:DESCRIPTION</to>
             </copy>
@@ -78,6 +74,10 @@
                 <from>substring-after($NewBox.box/ns0:endDate, 'T')</from>
                 <to>$InsertIn.part/ns1:BOX_Record/ns1:END_TIME</to>
             </copy>
+            <copy>
+                <from>$NewBox.box/ns0:address</from>
+                <to>$InsertIn.part/ns1:BOX_Record/ns1:LOCATION</to>
+            </copy>
         </assign>
         <invoke name="Invoke1" partnerLink="JavaDB" operation="insert" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService/JavaBoxDB" portType="tns:jdbcPortType" inputVariable="InsertIn" outputVariable="InsertOut"/>
         <assign name="Assign2">
@@ -89,10 +89,3 @@
         <reply name="callbackAdmin" partnerLink="Administrator" operation="createBox" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService" portType="tns:administrator" variable="CreateBoxOut"/>
     </sequence>
 </process>
-
-
-
-
-
-
-

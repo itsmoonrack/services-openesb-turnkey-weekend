@@ -13,7 +13,7 @@
         </service-engine-service-unit>
         <binding-component-service-unit artifacts-zip="sun-database-binding.jar" component-name="sun-database-binding" description="Represents this Service Unit" name="ProcessModel-sun-database-binding" unit-name="sun-database-binding">
             <ports>
-                <port x="67" y="118">
+                <port x="67" y="256">
                     <link xlink:href="../jbiServiceUnits/BoxService/DB/JavaBoxDB.wsdl#xpointer(/definitions/service[@name='service']/port[@name='port'])" xlink:type="simple"/>
                     <consumes endpoint="endpoint1"/>
                     <provides endpoint="endpoint1"/>

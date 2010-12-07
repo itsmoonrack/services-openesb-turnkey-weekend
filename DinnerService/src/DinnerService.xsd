@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://xml.netbeans.org/schema/DinnerService"
+    xmlns:tns="http://xml.netbeans.org/schema/DinnerService"
+    elementFormDefault="qualified">
+    <xsd:complexType name="Restaurant">
+        <xsd:sequence>
+            <xsd:element name="id" type="xsd:int"/>
+            <xsd:element name="name" type="xsd:string"/>
+            <xsd:element name="description" type="xsd:string"/>
+            <xsd:element name="address" type="xsd:string"/>
+            <xsd:element name="location" type="xsd:string"/>
+            <xsd:element name="stars" type="xsd:int"/>
+            <xsd:element name="typeFood" type="xsd:string"/>
+            <xsd:element name="menuPrice" type="xsd:double"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="RestaurantReservation">
+        <xsd:sequence>
+            <xsd:element name="id" type="xsd:int"/>
+            <xsd:element name="totalPrice" type="xsd:double"/>
+            <xsd:element name="date" type="xsd:date"/>
+            <xsd:element name="restaurant" type="tns:Restaurant"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ListOfRestaurants">
+        <xsd:sequence>
+            <xsd:element name="Restaurant" maxOccurs="unbounded" type="tns:Restaurant"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>
+

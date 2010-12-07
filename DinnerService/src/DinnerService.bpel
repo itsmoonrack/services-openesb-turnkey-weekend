@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process
+    name="DinnerService"
+    targetNamespace="http://enterprise.netbeans.org/bpel/DinnerService/dinnerService"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/DinnerService/dinnerService"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace"
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:sxed2="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2" xmlns:ns0="http://j2ee.netbeans.org/xsd/tableSchema" xmlns:ns1="http://xml.netbeans.org/schema/DinnerService">
+    <import namespace="http://j2ee.netbeans.org/wsdl/DinnerService/DinnerService" location="DinnerService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://j2ee.netbeans.org/wsdl/DinnerService/FindRestaurant" location="BD/FindRestaurant.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://j2ee.netbeans.org/wsdl/DinnerService/reserveRestaurant" location="BD/reserveRestaurant.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://j2ee.netbeans.org/wsdl/DinnerService/FindRestaurants" location="BD/FindRestaurants.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="PartnerLink2" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/FindRestaurant" partnerLinkType="tns:jdbcpartner" partnerRole="jdbcPortTypeRole"/>
+        <partnerLink name="PartnerLink3" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/reserveRestaurant" partnerLinkType="tns:jdbcpartner" partnerRole="jdbcPortTypeRole"/>
+        <partnerLink name="PartnerLink4" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/FindRestaurants" partnerLinkType="tns:jdbcpartner" partnerRole="jdbcPortTypeRole"/>
+        <partnerLink name="PartnerLink1" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/DinnerService" partnerLinkType="tns:DinnerService" myRole="DinnerServicePortTypeRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="FindOut2" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/FindRestaurants" messageType="tns:outputMsg"/>
+        <variable name="FindIn2" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/FindRestaurants" messageType="tns:inputMsg"/>
+        <variable name="GetRestaurantsOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/DinnerService" messageType="tns:getRestaurantsOperationResponse"/>
+        <variable name="GetRestaurantsOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/DinnerService" messageType="tns:getRestaurantsOperationRequest"/>
+        <variable name="ReserveRestaurantOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/DinnerService" messageType="tns:reserveRestaurantOperationResponse"/>
+        <variable name="InsertOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/reserveRestaurant" messageType="tns:RetMsg"/>
+        <variable name="InsertIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/reserveRestaurant" messageType="tns:inputMsg"/>
+        <variable name="ReserveRestaurantOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/DinnerService" messageType="tns:reserveRestaurantOperationRequest"/>
+        <variable name="FindOut1" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/FindRestaurant" messageType="tns:outputMsg"/>
+        <variable name="FindIn1" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/FindRestaurant" messageType="tns:inputMsg"/>
+        <variable name="GetRestaurantOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/DinnerService" messageType="tns:getRestaurantOperationResponse"/>
+        <variable name="FindOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/FindRestaurant" messageType="tns:outputMsg"/>
+        <variable name="FindIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/FindRestaurant" messageType="tns:inputMsg"/>
+        <variable name="GetRestaurantOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/DinnerService" messageType="tns:getRestaurantOperationRequest"/>
+    </variables>
+    <sequence>
+        <pick name="Pick1" createInstance="yes">
+            <onMessage partnerLink="PartnerLink1" operation="getRestaurantOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/DinnerService" portType="tns:DinnerServicePortType" variable="GetRestaurantOperationIn">
+                <sequence name="Sequence1">
+                    <assign name="AssignFind">
+                        <copy>
+                            <from variable="GetRestaurantOperationIn" part="id"/>
+                            <to>$FindIn.part/ns0:RESTAURANT_Record/ns0:ID</to>
+                        </copy>
+                    </assign>
+                    <invoke name="InvokeFind" partnerLink="PartnerLink2" operation="find" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/FindRestaurant" portType="tns:jdbcPortType" inputVariable="FindIn" outputVariable="FindOut"/>
+                    <if name="IfID">
+                        <condition>$FindOut.part/ns0:RESTAURANT_Record/ns0:ID = $GetRestaurantOperationIn.id</condition>
+                        <assign name="AssignResto">
+                            <copy>
+                                <from>$FindOut.part/ns0:RESTAURANT_Record/ns0:ID</from>
+                                <to>$GetRestaurantOperationOut.result/ns1:id</to>
+                            </copy>
+                            <copy>
+                                <from>$FindOut.part/ns0:RESTAURANT_Record/ns0:DESCRIPTION</from>
+                                <to>$GetRestaurantOperationOut.result/ns1:description</to>
+                            </copy>
+                            <copy>
+                                <from>$FindOut.part/ns0:RESTAURANT_Record/ns0:NAME</from>
+                                <to>$GetRestaurantOperationOut.result/ns1:name</to>
+                            </copy>
+                            <copy>
+                                <from>$FindOut.part/ns0:RESTAURANT_Record/ns0:ADDRESS</from>
+                                <to>$GetRestaurantOperationOut.result/ns1:address</to>
+                            </copy>
+                            <copy>
+                                <from>$FindOut.part/ns0:RESTAURANT_Record/ns0:LOCATION</from>
+                                <to>$GetRestaurantOperationOut.result/ns1:location</to>
+                            </copy>
+                            <copy>
+                                <from>$FindOut.part/ns0:RESTAURANT_Record/ns0:STARS</from>
+                                <to>$GetRestaurantOperationOut.result/ns1:stars</to>
+                            </copy>
+                            <copy>
+                                <from>$FindOut.part/ns0:RESTAURANT_Record/ns0:TYPEFOOD</from>
+                                <to>$GetRestaurantOperationOut.result/ns1:typeFood</to>
+                            </copy>
+                            <copy>
+                                <from>$FindOut.part/ns0:RESTAURANT_Record/ns0:MENUPRICE</from>
+                                <to>$GetRestaurantOperationOut.result/ns1:menuPrice</to>
+                            </copy>
+                        </assign>
+                        <else>
+                            <assign name="AssignBad">
+                                <copy>
+                                    <from>"Erreur lors de la recherche d'un restaurant : mauvais id"</from>
+                                    <to variable="GetRestaurantOperationOut" part="result"/>
+                                </copy>
+                            </assign>
+                        </else>
+                    </if>
+                    <reply name="Reply1" partnerLink="PartnerLink1" operation="getRestaurantOperation" portType="tns:DinnerServicePortType" variable="GetRestaurantOperationOut"/>
+                </sequence>
+            </onMessage>
+            <onMessage partnerLink="PartnerLink1" operation="reserveRestaurantOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/DinnerService" portType="tns:DinnerServicePortType" variable="ReserveRestaurantOperationIn">
+                <sequence name="Sequence2">
+                    <assign name="AssignFind2">
+                        <copy>
+                            <from variable="ReserveRestaurantOperationIn" part="id"/>
+                            <to>$FindIn1.part/ns0:RESTAURANT_Record/ns0:ID</to>
+                        </copy>
+                    </assign>
+                    <invoke name="InvokeFind2" partnerLink="PartnerLink2" operation="find" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/FindRestaurant" portType="tns:jdbcPortType" inputVariable="FindIn1" outputVariable="FindOut1"/>
+                    <if name="IfID2">
+                        <condition>$ReserveRestaurantOperationIn.id = $FindOut1.part/ns0:RESTAURANT_Record/ns0:ID</condition>
+                        <sequence name="Sequence3">
+                            <assign name="AssignInsert">
+                                <copy>
+                                    <from>$FindOut1.part/ns0:RESTAURANT_Record/ns0:ID</from>
+                                    <to>$InsertIn.part/ns0:RESTAURANT_RESERVATION_Record/ns0:ID_REST</to>
+                                </copy>
+                                <copy>
+                                    <from variable="ReserveRestaurantOperationIn" part="date"/>
+                                    <to>$InsertIn.part/ns0:RESTAURANT_RESERVATION_Record/ns0:DATE</to>
+                                </copy>
+                                <copy>
+                                    <from>$ReserveRestaurantOperationIn.nbPerson * $FindOut1.part/ns0:RESTAURANT_Record/ns0:MENUPRICE</from>
+                                    <to>$InsertIn.part/ns0:RESTAURANT_RESERVATION_Record/ns0:TOTALPRICE</to>
+                                </copy>
+                            </assign>
+                            <invoke name="InvokeInsert" partnerLink="PartnerLink3" operation="insert" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/reserveRestaurant" portType="tns:jdbcPortType" inputVariable="InsertIn" outputVariable="InsertOut"/>
+                            <assign name="AssignReponse">
+                                <copy>
+                                    <from>$FindOut1.part/ns0:RESTAURANT_Record/ns0:ID</from>
+                                    <to>$ReserveRestaurantOperationOut.result/ns1:restaurant/ns1:id</to>
+                                </copy>
+                                <copy>
+                                    <from>$FindOut1.part/ns0:RESTAURANT_Record/ns0:DESCRIPTION</from>
+                                    <to>$ReserveRestaurantOperationOut.result/ns1:restaurant/ns1:description</to>
+                                </copy>
+                                <copy>
+                                    <from>$FindOut1.part/ns0:RESTAURANT_Record/ns0:NAME</from>
+                                    <to>$ReserveRestaurantOperationOut.result/ns1:restaurant/ns1:name</to>
+                                </copy>
+                                <copy>
+                                    <from>$FindOut1.part/ns0:RESTAURANT_Record/ns0:ADDRESS</from>
+                                    <to>$ReserveRestaurantOperationOut.result/ns1:restaurant/ns1:address</to>
+                                </copy>
+                                <copy>
+                                    <from>$FindOut1.part/ns0:RESTAURANT_Record/ns0:LOCATION</from>
+                                    <to>$ReserveRestaurantOperationOut.result/ns1:restaurant/ns1:location</to>
+                                </copy>
+                                <copy>
+                                    <from>$FindOut1.part/ns0:RESTAURANT_Record/ns0:STARS</from>
+                                    <to>$ReserveRestaurantOperationOut.result/ns1:restaurant/ns1:stars</to>
+                                </copy>
+                                <copy>
+                                    <from>$FindOut1.part/ns0:RESTAURANT_Record/ns0:TYPEFOOD</from>
+                                    <to>$ReserveRestaurantOperationOut.result/ns1:restaurant/ns1:typeFood</to>
+                                </copy>
+                                <copy>
+                                    <from>$FindOut1.part/ns0:RESTAURANT_Record/ns0:MENUPRICE</from>
+                                    <to>$ReserveRestaurantOperationOut.result/ns1:restaurant/ns1:menuPrice</to>
+                                </copy>
+                                <copy>
+                                    <from variable="ReserveRestaurantOperationIn" part="date"/>
+                                    <to>$ReserveRestaurantOperationOut.result/ns1:date</to>
+                                </copy>
+                                <copy>
+                                    <from>$ReserveRestaurantOperationIn.nbPerson * $FindOut1.part/ns0:RESTAURANT_Record/ns0:MENUPRICE</from>
+                                    <to>$ReserveRestaurantOperationOut.result/ns1:totalPrice</to>
+                                </copy>
+                            </assign>
+                        </sequence>
+                        <else>
+                            <assign name="AssignBad2">
+                                <copy>
+                                    <from>"Erreur lors de la réservation d'un restaurant : mauvaise id"</from>
+                                    <to variable="ReserveRestaurantOperationOut" part="result"/>
+                                </copy>
+                            </assign>
+                        </else>
+                    </if>
+                    <reply name="Reply2" partnerLink="PartnerLink1" operation="reserveRestaurantOperation" portType="tns:DinnerServicePortType" variable="ReserveRestaurantOperationOut"/>
+                </sequence>
+            </onMessage>
+            <onMessage partnerLink="PartnerLink1" operation="getRestaurantsOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/DinnerService" portType="tns:DinnerServicePortType" variable="GetRestaurantsOperationIn">
+                <sequence name="Sequence4">
+                    <assign name="AssignFind3">
+                        <copy>
+                            <from variable="GetRestaurantsOperationIn" part="location"/>
+                            <to>$FindIn2.part/ns0:RESTAURANT_Record/ns0:LOCATION</to>
+                        </copy>
+                        <copy>
+                            <from variable="GetRestaurantsOperationIn" part="type"/>
+                            <to>$FindIn2.part/ns0:RESTAURANT_Record/ns0:TYPEFOOD</to>
+                        </copy>
+                    </assign>
+                    <invoke name="InvokeFind3" partnerLink="PartnerLink4" operation="find" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/FindRestaurants" portType="tns:jdbcPortType" inputVariable="FindIn2" outputVariable="FindOut2"/>
+                    <if name="Iflocation">
+                        <condition>$FindOut2.part/ns0:RESTAURANT_Record/ns0:LOCATION = $GetRestaurantsOperationIn.location and $FindOut2.part/ns0:RESTAURANT_Record/ns0:TYPEFOOD = $GetRestaurantsOperationIn.type</condition>
+                        <assign name="AssignResponse2">
+                            <copy>
+                                    <from>$FindOut2.part/ns0:RESTAURANT_Record/ns0:ID</from>
+                                        <to>$GetRestaurantsOperationOut.results/ns1:Restaurant/ns1:id</to>
+                                </copy>
+                        </assign>
+                        <else>
+                            <assign name="AssignBad3">
+                                <copy>
+                                    <from>'Aucun restaurant ne correspond aux criteres definis'</from>
+                                    <to variable="GetRestaurantsOperationOut" part="results"/>
+                                </copy>
+                            </assign>
+                        </else>
+                    </if>
+                    <reply name="Reply3" partnerLink="PartnerLink1" operation="getRestaurantsOperation" portType="tns:DinnerServicePortType" variable="GetRestaurantsOperationOut"/>
+                </sequence>
+            </onMessage>
+        </pick>
+    </sequence>
+</process>
+
+
+

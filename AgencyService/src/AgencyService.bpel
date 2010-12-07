@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process
+    name="AgencyService"
+    targetNamespace="http://enterprise.netbeans.org/bpel/AgencyService/agencyService"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/AgencyService/agencyService"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace"
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:sxed2="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2" xmlns:ns0="http://j2ee.netbeans.org/xsd/tableSchema" xmlns:ns1="http://xml.netbeans.org/schema/AgencyService">
+    <import namespace="http://j2ee.netbeans.org/wsdl/AgencyService/AgencyService" location="AgencyService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://j2ee.netbeans.org/wsdl/AgencyService/FindManifestation" location="BD/FindManifestation.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://j2ee.netbeans.org/wsdl/AgencyService/ReserveManifestation" location="BD/ReserveManifestation.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://j2ee.netbeans.org/wsdl/AgencyService/FindManifestations" location="BD/FindManifestations.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="PartnerLink2" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/FindManifestation" partnerLinkType="tns:jdbcpartner" partnerRole="jdbcPortTypeRole"/>
+        <partnerLink name="PartnerLink3" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/ReserveManifestation" partnerLinkType="tns:jdbcpartner" partnerRole="jdbcPortTypeRole"/>
+        <partnerLink name="PartnerLink4" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/FindManifestations" partnerLinkType="tns:jdbcpartner" partnerRole="jdbcPortTypeRole"/>
+        <partnerLink name="PartnerLink1" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/AgencyService" partnerLinkType="tns:AgencyService" myRole="AgencyServicePortTypeRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="FindOut2" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/FindManifestations" messageType="tns:outputMsg"/>
+        <variable name="FindIn2" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/FindManifestations" messageType="tns:inputMsg"/>
+        <variable name="GetManifestationsOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/AgencyService" messageType="tns:getManifestationsOperationResponse"/>
+        <variable name="GetManifestationsOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/AgencyService" messageType="tns:getManifestationsOperationRequest"/>
+        <variable name="ReserveManifestationOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/AgencyService" messageType="tns:reserveManifestationOperationResponse"/>
+        <variable name="InsertOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/ReserveManifestation" messageType="tns:RetMsg"/>
+        <variable name="InsertIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/ReserveManifestation" messageType="tns:inputMsg"/>
+        <variable name="FindOut1" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/FindManifestation" messageType="tns:outputMsg"/>
+        <variable name="FindIn1" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/FindManifestation" messageType="tns:inputMsg"/>
+        <variable name="ReserveManifestationOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/AgencyService" messageType="tns:reserveManifestationOperationRequest"/>
+        <variable name="FindOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/FindManifestation" messageType="tns:outputMsg"/>
+        <variable name="FindIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/FindManifestation" messageType="tns:inputMsg"/>
+        <variable name="GetManifestationOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/AgencyService" messageType="tns:getManifestationOperationResponse"/>
+        <variable name="GetManifestationOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/AgencyService" messageType="tns:getManifestationOperationRequest"/>
+    </variables>
+    <sequence>
+        <pick name="Pick1" createInstance="yes">
+            <onMessage partnerLink="PartnerLink1" operation="getManifestationOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/AgencyService" portType="tns:AgencyServicePortType" variable="GetManifestationOperationIn">
+                <sequence name="Sequence1">
+                    <assign name="AssignFind">
+                        <copy>
+                            <from variable="GetManifestationOperationIn" part="id"/>
+                            <to>$FindIn.part/ns0:MANIFESTATION_Record/ns0:ID</to>
+                        </copy>
+                    </assign>
+                    <invoke name="InvokeFind" partnerLink="PartnerLink2" operation="find" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/FindManifestation" portType="tns:jdbcPortType" inputVariable="FindIn" outputVariable="FindOut"/>
+                    <if name="IfID">
+                        <condition>$FindOut.part/ns0:MANIFESTATION_Record/ns0:ID = $GetManifestationOperationIn.id</condition>
+                        <assign name="AssignManif">
+                            <copy>
+                                <from>$FindOut.part/ns0:MANIFESTATION_Record/ns0:ID</from>
+                                <to>$GetManifestationOperationOut.result/ns1:id</to>
+                            </copy>
+                            <copy>
+                                <from>$FindOut.part/ns0:MANIFESTATION_Record/ns0:TYPE</from>
+                                <to>$GetManifestationOperationOut.result/ns1:type</to>
+                            </copy>
+                            <copy>
+                                <from>$FindOut.part/ns0:MANIFESTATION_Record/ns0:NAME</from>
+                                <to>$GetManifestationOperationOut.result/ns1:name</to>
+                            </copy>
+                            <copy>
+                                <from>$FindOut.part/ns0:MANIFESTATION_Record/ns0:ADDRESS</from>
+                                <to>$GetManifestationOperationOut.result/ns1:adress</to>
+                            </copy>
+                            <copy>
+                                <from>$FindOut.part/ns0:MANIFESTATION_Record/ns0:LOCATION</from>
+                                <to>$GetManifestationOperationOut.result/ns1:location</to>
+                            </copy>
+                            <copy>
+                                <from>$FindOut.part/ns0:MANIFESTATION_Record/ns0:PRICETICKET</from>
+                                <to>$GetManifestationOperationOut.result/ns1:priceTicket</to>
+                            </copy>
+                            <copy>
+                                <from>$FindOut.part/ns0:MANIFESTATION_Record/ns0:DATE</from>
+                                <to>$GetManifestationOperationOut.result/ns1:Date</to>
+                            </copy>
+                        </assign>
+                        <else>
+                            <assign name="AssignBad">
+                                <copy>
+                                    <from>"Erreur lors de l'acces à une manifestation : mauvaise id"</from>
+                                    <to variable="GetManifestationOperationOut" part="result"/>
+                                </copy>
+                            </assign>
+                        </else>
+                    </if>
+                    <reply name="Reply1" partnerLink="PartnerLink1" operation="getManifestationOperation" portType="tns:AgencyServicePortType" variable="GetManifestationOperationOut"/>
+                </sequence>
+            </onMessage>
+            <onMessage partnerLink="PartnerLink1" operation="reserveManifestationOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/AgencyService" portType="tns:AgencyServicePortType" variable="ReserveManifestationOperationIn">
+                <sequence name="Sequence2">
+                    <assign name="AssignFind2">
+                        <copy>
+                            <from variable="ReserveManifestationOperationIn" part="id"/>
+                            <to>$FindIn1.part/ns0:MANIFESTATION_Record/ns0:ID</to>
+                        </copy>
+                    </assign>
+                    <invoke name="InvokeFind2" partnerLink="PartnerLink2" operation="find" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/FindManifestation" portType="tns:jdbcPortType" inputVariable="FindIn1" outputVariable="FindOut1"/>
+                    <if name="If1">
+                        <condition>$FindOut1.part/ns0:MANIFESTATION_Record/ns0:ID = $ReserveManifestationOperationIn.id</condition>
+                        <sequence name="Sequence3">
+                            <assign name="AssignInsert">
+                                <copy>
+                                    <from variable="ReserveManifestationOperationIn" part="id"/>
+                                    <to>$InsertIn.part/ns0:MANIFESTATION_RESERVATION_Record/ns0:ID_MANIF</to>
+                                </copy>
+                                <copy>
+                                    <from>$FindOut1.part/ns0:MANIFESTATION_Record/ns0:PRICETICKET * $ReserveManifestationOperationIn.nbTicket</from>
+                                    <to>$InsertIn.part/ns0:MANIFESTATION_RESERVATION_Record/ns0:TOTALPRICE</to>
+                                </copy>
+                                <copy>
+                                    <from variable="ReserveManifestationOperationIn" part="date"/>
+                                    <to>$InsertIn.part/ns0:MANIFESTATION_RESERVATION_Record/ns0:DATE</to>
+                                </copy>
+                            </assign>
+                            <invoke name="InvokeInsert" partnerLink="PartnerLink3" operation="insert" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/ReserveManifestation" portType="tns:jdbcPortType" inputVariable="InsertIn" outputVariable="InsertOut"/>
+                            <assign name="AssignResponse">
+                                <copy>
+                                    <from>$FindOut1.part/ns0:MANIFESTATION_Record/ns0:ID</from>
+                                    <to>$ReserveManifestationOperationOut.result/ns1:manifestation/ns1:id</to>
+                                </copy>
+                                <copy>
+                                    <from>$FindOut1.part/ns0:MANIFESTATION_Record/ns0:TYPE</from>
+                                    <to>$ReserveManifestationOperationOut.result/ns1:manifestation/ns1:type</to>
+                                </copy>
+                                <copy>
+                                    <from>$FindOut1.part/ns0:MANIFESTATION_Record/ns0:NAME</from>
+                                    <to>$ReserveManifestationOperationOut.result/ns1:manifestation/ns1:name</to>
+                                </copy>
+                                <copy>
+                                    <from>$FindOut1.part/ns0:MANIFESTATION_Record/ns0:ADDRESS</from>
+                                    <to>$ReserveManifestationOperationOut.result/ns1:manifestation/ns1:adress</to>
+                                </copy>
+                                <copy>
+                                    <from>$FindOut1.part/ns0:MANIFESTATION_Record/ns0:LOCATION</from>
+                                    <to>$ReserveManifestationOperationOut.result/ns1:manifestation/ns1:location</to>
+                                </copy>
+                                <copy>
+                                    <from>$FindOut1.part/ns0:MANIFESTATION_Record/ns0:PRICETICKET</from>
+                                    <to>$ReserveManifestationOperationOut.result/ns1:manifestation/ns1:priceTicket</to>
+                                </copy>
+                                <copy>
+                                    <from>$FindOut1.part/ns0:MANIFESTATION_Record/ns0:DATE</from>
+                                    <to>$ReserveManifestationOperationOut.result/ns1:manifestation/ns1:Date</to>
+                                </copy>
+                                <copy>
+                                    <from variable="ReserveManifestationOperationIn" part="date"/>
+                                    <to>$ReserveManifestationOperationOut.result/ns1:date</to>
+                                </copy>
+                                <copy>
+                                    <from variable="ReserveManifestationOperationIn" part="id"/>
+                                    <to>$ReserveManifestationOperationOut.result/ns1:id</to>
+                                </copy>
+                                <copy>
+                                    <from>$FindOut1.part/ns0:MANIFESTATION_Record/ns0:PRICETICKET * $ReserveManifestationOperationIn.nbTicket</from>
+                                    <to>$ReserveManifestationOperationOut.result/ns1:totalPrice</to>
+                                </copy>
+                            </assign>
+                        </sequence>
+                        <else>
+                            <assign name="AssignBad2">
+                                <copy>
+                                    <from>"Erreur lors de la réservation d'une manifestation : mauvaise id"</from>
+                                    <to variable="ReserveManifestationOperationOut" part="result"/>
+                                </copy>
+                            </assign>
+                        </else>
+                    </if>
+                    <reply name="Reply2" partnerLink="PartnerLink1" operation="reserveManifestationOperation" portType="tns:AgencyServicePortType" variable="ReserveManifestationOperationOut"/>
+                </sequence>
+            </onMessage>
+            <onMessage partnerLink="PartnerLink1" operation="getManifestationsOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/AgencyService" portType="tns:AgencyServicePortType" variable="GetManifestationsOperationIn">
+                <sequence name="Sequence4">
+                    <assign name="AssignFind3">
+                        <copy>
+                            <from variable="GetManifestationsOperationIn" part="location"/>
+                            <to>$FindIn2.part/ns0:MANIFESTATION_Record/ns0:LOCATION</to>
+                        </copy>
+                        <copy>
+                            <from variable="GetManifestationsOperationIn" part="date"/>
+                            <to>$FindIn2.part/ns0:MANIFESTATION_Record/ns0:DATE</to>
+                        </copy>
+                    </assign>
+                    <invoke name="InvokeFind3" partnerLink="PartnerLink4" operation="find" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/FindManifestations" portType="tns:jdbcPortType" inputVariable="FindIn2" outputVariable="FindOut2"/>
+                    <if name="Iflocation">
+                        <condition>$FindOut2.part/ns0:MANIFESTATION_Record/ns0:LOCATION = $GetManifestationsOperationIn.location and $FindOut2.part/ns0:MANIFESTATION_Record/ns0:DATE = $GetManifestationsOperationIn.date</condition>
+                        <assign name="AssignResponse2">
+                            <copy>
+                                    <from>$FindOut2.part/ns0:MANIFESTATION_Record/ns0:ID</from>
+                                        <to>$GetManifestationsOperationOut.results/ns1:Manifestation/ns1:id</to>
+                                </copy>
+                        </assign>
+                        <else>
+                            <assign name="AssignBad3">
+                                <copy>
+                                    <from>'Aucune manifestation ne correspond aux critères définis'</from>
+                                    <to variable="GetManifestationsOperationOut" part="results"/>
+                                </copy>
+                            </assign>
+                        </else>
+                    </if>
+                    <reply name="Reply3" partnerLink="PartnerLink1" operation="getManifestationsOperation" portType="tns:AgencyServicePortType" variable="GetManifestationsOperationOut"/>
+                </sequence>
+            </onMessage>
+        </pick>
+    </sequence>
+</process>
+
+
+

@@ -33,7 +33,7 @@
         <part name="box" type="ns:Box"/>
     </message>
     <message name="createBoxResponse">
-        <part name="result" type="xsd:boolean"/>
+        <part name="result" type="xsd:int"/>
     </message>
     <message name="readBoxRequest">
         <part name="id" type="xsd:int"/>
@@ -156,7 +156,7 @@
     </binding>
     <service name="BoxService">
         <port name="clientPort" binding="tns:clientBinding">
-            <soap:address location="http://localhost:${HttpDefaultPort}/BoxService/boxPort"/>
+            <soap:address location="http://localhost:${HttpDefaultPort}/BoxService/clientPort"/>
         </port>
         <port name="adminPort" binding="tns:administratorBinding">
             <soap:address location="http://localhost:${HttpDefaultPort}/BoxService/adminPort"/>
@@ -172,6 +172,8 @@ A partner link type characterizes the conversational relationship between two se
         <plnk:role name="administratorRole" portType="tns:administrator"/>
     </plnk:partnerLinkType>
 </definitions>
+
+
 
 
 

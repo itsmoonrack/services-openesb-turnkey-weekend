@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process
+    name="HotelService"
+    targetNamespace="http://enterprise.netbeans.org/bpel/HotelService/hotelService"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/HotelService/hotelService"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace"
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:sxed2="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2" xmlns:ns0="http://j2ee.netbeans.org/xsd/tableSchema" xmlns:ns1="http://xml.netbeans.org/schema/DinnerService">
+    <import namespace="http://j2ee.netbeans.org/wsdl/HotelService/HotelService" location="HotelService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://j2ee.netbeans.org/wsdl/HotelService/FindHotel" location="BD/FindHotel.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://j2ee.netbeans.org/wsdl/HotelService/ReserveHotel" location="BD/ReserveHotel.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://j2ee.netbeans.org/wsdl/HotelService/FindHotels" location="BD/FindHotels.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="PartnerLink2" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/FindHotel" partnerLinkType="tns:jdbcpartner" partnerRole="jdbcPortTypeRole"/>
+        <partnerLink name="PartnerLink3" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/ReserveHotel" partnerLinkType="tns:jdbcpartner" partnerRole="jdbcPortTypeRole"/>
+        <partnerLink name="PartnerLink4" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/FindHotels" partnerLinkType="tns:jdbcpartner" partnerRole="jdbcPortTypeRole"/>
+        <partnerLink name="PartnerLink1" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/HotelService" partnerLinkType="tns:HotelService" myRole="HotelServicePortTypeRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="FindOut2" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/FindHotels" messageType="tns:outputMsg"/>
+        <variable name="FindIn2" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/FindHotels" messageType="tns:inputMsg"/>
+        <variable name="GetHotelsOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/HotelService" messageType="tns:getHotelsOperationResponse"/>
+        <variable name="GetHotelsOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/HotelService" messageType="tns:getHotelsOperationRequest"/>
+        <variable name="InsertOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/ReserveHotel" messageType="tns:RetMsg"/>
+        <variable name="InsertIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/ReserveHotel" messageType="tns:inputMsg"/>
+        <variable name="FindOut1" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/FindHotel" messageType="tns:outputMsg"/>
+        <variable name="FindIn1" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/FindHotel" messageType="tns:inputMsg"/>
+        <variable name="ReserveHotelOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/HotelService" messageType="tns:reserveHotelOperationResponse"/>
+        <variable name="ReserveHotelOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/HotelService" messageType="tns:reserveHotelOperationRequest"/>
+        <variable name="FindOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/FindHotel" messageType="tns:outputMsg"/>
+        <variable name="FindIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/FindHotel" messageType="tns:inputMsg"/>
+        <variable name="GetHotelOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/HotelService" messageType="tns:getHotelOperationResponse"/>
+        <variable name="GetHotelOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/HotelService" messageType="tns:getHotelOperationRequest"/>
+    </variables>
+    <sequence>
+        <pick name="Pick1" createInstance="yes">
+            <onMessage partnerLink="PartnerLink1" operation="getHotelOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/HotelService" portType="tns:HotelServicePortType" variable="GetHotelOperationIn">
+                <sequence name="Sequence1">
+                    <assign name="AssignFind">
+                        <copy>
+                            <from variable="GetHotelOperationIn" part="id"/>
+                            <to>$FindIn.part/ns0:HOTEL_Record/ns0:ID</to>
+                        </copy>
+                    </assign>
+                    <invoke name="InvokeFind" partnerLink="PartnerLink2" operation="find" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/FindHotel" portType="tns:jdbcPortType" inputVariable="FindIn" outputVariable="FindOut"/>
+                    <if name="IfID">
+                        <condition>$FindOut.part/ns0:HOTEL_Record/ns0:ID = $GetHotelOperationIn.id</condition>
+                        <assign name="AssignHotel">
+                            <copy>
+                                <from>$FindOut.part/ns0:HOTEL_Record/ns0:ID</from>
+                                <to>$GetHotelOperationOut.result/ns1:id</to>
+                            </copy>
+                            <copy>
+                                <from>$FindOut.part/ns0:HOTEL_Record/ns0:NAME</from>
+                                <to>$GetHotelOperationOut.result/ns1:name</to>
+                            </copy>
+                            <copy>
+                                <from>$FindOut.part/ns0:HOTEL_Record/ns0:DESCRIPTION</from>
+                                <to>$GetHotelOperationOut.result/ns1:description</to>
+                            </copy>
+                            <copy>
+                                <from>$FindOut.part/ns0:HOTEL_Record/ns0:ADDRESS</from>
+                                <to>$GetHotelOperationOut.result/ns1:address</to>
+                            </copy>
+                            <copy>
+                                <from>$FindOut.part/ns0:HOTEL_Record/ns0:LOCATION</from>
+                                <to>$GetHotelOperationOut.result/ns1:location</to>
+                            </copy>
+                            <copy>
+                                <from>$FindOut.part/ns0:HOTEL_Record/ns0:NIGHTPRICE</from>
+                                <to>$GetHotelOperationOut.result/ns1:nightPrice</to>
+                            </copy>
+                            <copy>
+                                <from>$FindOut.part/ns0:HOTEL_Record/ns0:BREAKFASTPRICE</from>
+                                <to>$GetHotelOperationOut.result/ns1:breakfastPrice</to>
+                            </copy>
+                            <copy>
+                                <from>$FindOut.part/ns0:HOTEL_Record/ns0:STARS</from>
+                                <to>$GetHotelOperationOut.result/ns1:stars</to>
+                            </copy>
+                        </assign>
+                        <else>
+                            <assign name="AssignBad">
+                                <copy>
+                                    <from>"Erreur lors de l'acces à un hotel : mauvaise id"</from>
+                                    <to variable="GetHotelOperationOut" part="result"/>
+                                </copy>
+                            </assign>
+                        </else>
+                    </if>
+                    <reply name="Reply1" partnerLink="PartnerLink1" operation="getHotelOperation" portType="tns:HotelServicePortType" variable="GetHotelOperationOut"/>
+                </sequence>
+            </onMessage>
+            <onMessage partnerLink="PartnerLink1" operation="reserveHotelOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/HotelService" portType="tns:HotelServicePortType" variable="ReserveHotelOperationIn">
+                <sequence name="Sequence2">
+                    <assign name="AssignFind2">
+                        <copy>
+                            <from variable="ReserveHotelOperationIn" part="id"/>
+                            <to>$FindIn1.part/ns0:HOTEL_Record/ns0:ID</to>
+                        </copy>
+                    </assign>
+                    <invoke name="InvokeFind2" partnerLink="PartnerLink2" operation="find" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/FindHotel" portType="tns:jdbcPortType" inputVariable="FindIn1" outputVariable="FindOut1"/>
+                    <if name="IfID2">
+                        <condition>$FindOut1.part/ns0:HOTEL_Record/ns0:ID = $ReserveHotelOperationIn.id</condition>
+                        <sequence name="Sequence3">
+                            <assign name="AssignInsert">
+                                <copy>
+                                    <from variable="ReserveHotelOperationIn" part="id"/>
+                                    <to>$InsertIn.part/ns0:HOTEL_RESERVATION_Record/ns0:ID_HOTEL</to>
+                                </copy>
+                                <copy>
+                                    <from variable="ReserveHotelOperationIn" part="date"/>
+                                    <to>$InsertIn.part/ns0:HOTEL_RESERVATION_Record/ns0:DATE</to>
+                                </copy>
+                                <copy>
+                                    <from variable="ReserveHotelOperationIn" part="nbPerson"/>
+                                    <to>$InsertIn.part/ns0:HOTEL_RESERVATION_Record/ns0:NBNIGHT</to>
+                                </copy>
+                                <copy>
+                                    <from variable="ReserveHotelOperationIn" part="nbBreakfast"/>
+                                    <to>$InsertIn.part/ns0:HOTEL_RESERVATION_Record/ns0:NBBREAKFAST</to>
+                                </copy>
+                                <copy>
+                                    <from>$FindOut1.part/ns0:HOTEL_Record/ns0:NIGHTPRICE * $ReserveHotelOperationIn.nbPerson + $FindOut1.part/ns0:HOTEL_Record/ns0:BREAKFASTPRICE * $ReserveHotelOperationIn.nbBreakfast</from>
+                                    <to>$InsertIn.part/ns0:HOTEL_RESERVATION_Record/ns0:TOTALPRICE</to>
+                                </copy>
+                            </assign>
+                            <invoke name="InvokeInsert" partnerLink="PartnerLink3" operation="insert" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/ReserveHotel" portType="tns:jdbcPortType" inputVariable="InsertIn" outputVariable="InsertOut"/>
+                            <assign name="AssignResponse">
+                                <copy>
+                                    <from>$FindOut1.part/ns0:HOTEL_Record/ns0:ID</from>
+                                    <to>$ReserveHotelOperationOut.result/ns1:hotel/ns1:id</to>
+                                </copy>
+                                <copy>
+                                    <from>$FindOut1.part/ns0:HOTEL_Record/ns0:NAME</from>
+                                    <to>$ReserveHotelOperationOut.result/ns1:hotel/ns1:name</to>
+                                </copy>
+                                <copy>
+                                    <from>$FindOut1.part/ns0:HOTEL_Record/ns0:DESCRIPTION</from>
+                                    <to>$ReserveHotelOperationOut.result/ns1:hotel/ns1:description</to>
+                                </copy>
+                                <copy>
+                                    <from>$FindOut1.part/ns0:HOTEL_Record/ns0:ADDRESS</from>
+                                    <to>$ReserveHotelOperationOut.result/ns1:hotel/ns1:address</to>
+                                </copy>
+                                <copy>
+                                    <from>$FindOut1.part/ns0:HOTEL_Record/ns0:LOCATION</from>
+                                    <to>$ReserveHotelOperationOut.result/ns1:hotel/ns1:location</to>
+                                </copy>
+                                <copy>
+                                    <from>$FindOut1.part/ns0:HOTEL_Record/ns0:NIGHTPRICE</from>
+                                    <to>$ReserveHotelOperationOut.result/ns1:hotel/ns1:nightPrice</to>
+                                </copy>
+                                <copy>
+                                    <from>$FindOut1.part/ns0:HOTEL_Record/ns0:BREAKFASTPRICE</from>
+                                    <to>$ReserveHotelOperationOut.result/ns1:hotel/ns1:breakfastPrice</to>
+                                </copy>
+                                <copy>
+                                    <from>$FindOut1.part/ns0:HOTEL_Record/ns0:STARS</from>
+                                    <to>$ReserveHotelOperationOut.result/ns1:hotel/ns1:stars</to>
+                                </copy>
+                                <copy>
+                                    <from variable="ReserveHotelOperationIn" part="date"/>
+                                    <to>$ReserveHotelOperationOut.result/ns1:date</to>
+                                </copy>
+                                <copy>
+                                    <from variable="ReserveHotelOperationIn" part="nbPerson"/>
+                                    <to>$ReserveHotelOperationOut.result/ns1:nbPerson</to>
+                                </copy>
+                                <copy>
+                                    <from variable="ReserveHotelOperationIn" part="nbBreakfast"/>
+                                    <to>$ReserveHotelOperationOut.result/ns1:nbBreakfast</to>
+                                </copy>
+                                <copy>
+                                    <from>$ReserveHotelOperationIn.nbPerson * $FindOut1.part/ns0:HOTEL_Record/ns0:NIGHTPRICE + $FindOut1.part/ns0:HOTEL_Record/ns0:BREAKFASTPRICE * $ReserveHotelOperationIn.nbBreakfast</from>
+                                    <to>$ReserveHotelOperationOut.result/ns1:totalPrice</to>
+                                </copy>
+                            </assign>
+                        </sequence>
+                        <else>
+                            <assign name="AssignBad2">
+                                <copy>
+                                    <from>"Erreur lors de la réservation d'un hotel : mauvaise id"</from>
+                                    <to variable="ReserveHotelOperationOut" part="result"/>
+                                </copy>
+                            </assign>
+                        </else>
+                    </if>
+                    <reply name="Reply2" partnerLink="PartnerLink1" operation="reserveHotelOperation" portType="tns:HotelServicePortType" variable="ReserveHotelOperationOut"/>
+                </sequence>
+            </onMessage>
+            <onMessage partnerLink="PartnerLink1" operation="getHotelsOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/HotelService" portType="tns:HotelServicePortType" variable="GetHotelsOperationIn">
+                <sequence name="Sequence4">
+                    <assign name="AssignFind3">
+                        <copy>
+                            <from variable="GetHotelsOperationIn" part="location"/>
+                            <to>$FindIn2.part/ns0:HOTEL_Record/ns0:LOCATION</to>
+                        </copy>
+                    </assign>
+                    <invoke name="InvokeFind3" partnerLink="PartnerLink4" operation="find" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/FindHotels" portType="tns:jdbcPortType" inputVariable="FindIn2" outputVariable="FindOut2"/>
+                    <if name="IfLocation">
+                        <condition>$FindOut2.part/ns0:HOTEL_Record/ns0:LOCATION = $GetHotelsOperationIn.location</condition>
+                        <assign name="AssignResponse2">
+                            <copy>
+                                    <from>$FindOut2.part/ns0:HOTEL_Record/ns0:ID</from>
+                                        <to>$GetHotelsOperationOut.results/ns1:Hotel/ns1:id</to>
+                                </copy>
+                        </assign>
+                        <else>
+                            <assign name="AssignBad3">
+                                <copy>
+                                    <from>"Erreur lors de la recherche d'hotels : aucun ne correspond à la ville choisie"</from>
+                                    <to variable="GetHotelsOperationOut" part="results"/>
+                                </copy>
+                            </assign>
+                        </else>
+                    </if>
+                    <reply name="Reply3" partnerLink="PartnerLink1" operation="getHotelsOperation" portType="tns:HotelServicePortType" variable="GetHotelsOperationOut"/>
+                </sequence>
+            </onMessage>
+        </pick>
+    </sequence>
+</process>
+
+
