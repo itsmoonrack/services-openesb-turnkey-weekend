@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="FindTravel" targetNamespace="http://j2ee.netbeans.org/wsdl/TravelService/FindTravel" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://j2ee.netbeans.org/xsd/tableSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/FindTravel" xmlns:plink="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:jdbc="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/">
+  <types>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/">
+            <xsd:import namespace="http://j2ee.netbeans.org/xsd/tableSchema" schemaLocation="TRAVEL.xsd"/>
+	</xsd:schema>
+  </types>
+  <message name="inputMsg">
+    <part name="part" element="ns:TRAVEL"/>
+  </message>
+  <message name="RetMsg">
+    <part name="part" type="xsd:int"/>
+  </message>
+  <message name="outputMsg">
+    <part name="part" element="ns:TRAVEL"/>
+  </message>
+  <portType name="jdbcPortType">
+    <operation name="find">
+      <input name="inputFind" message="tns:inputMsg"/>
+      <output name="outputFind" message="tns:outputMsg"/>
+    </operation>
+  </portType>
+  <binding name="binding" type="tns:jdbcPortType">
+    <jdbc:binding xmlns:jdbc="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/"/>
+    <operation name="find">
+    <jdbc:operation xmlns:jdbc="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/"/>
+      <input name="inputFind">
+    <jdbc:input xmlns:jdbc="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/" MarkColumnName="" MarkColumnValue="" MoveRowToTableName="" PKName="ID" PollMilliSeconds="5000" PollingPostProcessing="MoveRow" TableName="TRAVEL" Transaction="NOTransaction" numberOfRecords="" operationType="find" paramOrder="LOCATIONFROM,LOCATIONTO,DEPARTUREDATE" sql="select ID,LOCATIONFROM,LOCATIONTO,PRICE,DEPARTUREDATE from TRAVEL where LOCATIONFROM in (?) and LOCATIONTO in (?) and DEPARTUREDATE in (?)"/>
+      </input>
+      <output name="outputFind">
+    <jdbc:output xmlns:jdbc="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/" returnPartName="part"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="service">
+    <port name="port" binding="tns:binding">
+    <jdbc:address xmlns:jdbc="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/" jndiName="jdbc/__defaultDS"/>
+    </port>
+  </service>
+    <plink:partnerLinkType xmlns:plink="http://docs.oasis-open.org/wsbpel/2.0/plnktype" name="jdbcpartner">
+        <plink:role name="jdbcPortTypeRole" portType="tns:jdbcPortType"/>
+    </plink:partnerLinkType>
+</definitions>
+
+

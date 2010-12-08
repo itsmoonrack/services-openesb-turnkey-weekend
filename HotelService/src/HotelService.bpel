@@ -14,14 +14,13 @@
     <import namespace="http://j2ee.netbeans.org/wsdl/HotelService/ReserveHotel" location="BD/ReserveHotel.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <import namespace="http://j2ee.netbeans.org/wsdl/HotelService/FindHotels" location="BD/FindHotels.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <partnerLinks>
-        <partnerLink name="PartnerLink2" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/FindHotel" partnerLinkType="tns:jdbcpartner" partnerRole="jdbcPortTypeRole"/>
-        <partnerLink name="PartnerLink3" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/ReserveHotel" partnerLinkType="tns:jdbcpartner" partnerRole="jdbcPortTypeRole"/>
-        <partnerLink name="PartnerLink4" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/FindHotels" partnerLinkType="tns:jdbcpartner" partnerRole="jdbcPortTypeRole"/>
-        <partnerLink name="PartnerLink1" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/HotelService" partnerLinkType="tns:HotelService" myRole="HotelServicePortTypeRole"/>
+        <partnerLink name="Hotels" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/FindHotel" partnerLinkType="tns:jdbcpartner" partnerRole="jdbcPortTypeRole"/>
+        <partnerLink name="Reservation" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/ReserveHotel" partnerLinkType="tns:jdbcpartner" partnerRole="jdbcPortTypeRole"/>
+        <partnerLink name="Client" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/HotelService" partnerLinkType="tns:HotelService" myRole="HotelServicePortTypeRole"/>
     </partnerLinks>
     <variables>
-        <variable name="FindOut2" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/FindHotels" messageType="tns:outputMsg"/>
-        <variable name="FindIn2" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/FindHotels" messageType="tns:inputMsg"/>
+        <variable name="FindOut3" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/FindHotel" messageType="tns:outputMsg"/>
+        <variable name="FindIn3" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/FindHotel" messageType="tns:inputMsg"/>
         <variable name="GetHotelsOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/HotelService" messageType="tns:getHotelsOperationResponse"/>
         <variable name="GetHotelsOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/HotelService" messageType="tns:getHotelsOperationRequest"/>
         <variable name="InsertOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/ReserveHotel" messageType="tns:RetMsg"/>
@@ -37,7 +36,7 @@
     </variables>
     <sequence>
         <pick name="Pick1" createInstance="yes">
-            <onMessage partnerLink="PartnerLink1" operation="getHotelOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/HotelService" portType="tns:HotelServicePortType" variable="GetHotelOperationIn">
+            <onMessage partnerLink="Client" operation="getHotelOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/HotelService" portType="tns:HotelServicePortType" variable="GetHotelOperationIn">
                 <sequence name="Sequence1">
                     <assign name="AssignFind">
                         <copy>
@@ -45,7 +44,7 @@
                             <to>$FindIn.part/ns0:HOTEL_Record/ns0:ID</to>
                         </copy>
                     </assign>
-                    <invoke name="InvokeFind" partnerLink="PartnerLink2" operation="find" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/FindHotel" portType="tns:jdbcPortType" inputVariable="FindIn" outputVariable="FindOut"/>
+                    <invoke name="InvokeFind" partnerLink="Hotels" operation="find" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/FindHotel" portType="tns:jdbcPortType" inputVariable="FindIn" outputVariable="FindOut"/>
                     <if name="IfID">
                         <condition>$FindOut.part/ns0:HOTEL_Record/ns0:ID = $GetHotelOperationIn.id</condition>
                         <assign name="AssignHotel">
@@ -91,10 +90,10 @@
                             </assign>
                         </else>
                     </if>
-                    <reply name="Reply1" partnerLink="PartnerLink1" operation="getHotelOperation" portType="tns:HotelServicePortType" variable="GetHotelOperationOut"/>
+                    <reply name="Reply1" partnerLink="Client" operation="getHotelOperation" portType="tns:HotelServicePortType" variable="GetHotelOperationOut"/>
                 </sequence>
             </onMessage>
-            <onMessage partnerLink="PartnerLink1" operation="reserveHotelOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/HotelService" portType="tns:HotelServicePortType" variable="ReserveHotelOperationIn">
+            <onMessage partnerLink="Client" operation="reserveHotelOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/HotelService" portType="tns:HotelServicePortType" variable="ReserveHotelOperationIn">
                 <sequence name="Sequence2">
                     <assign name="AssignFind2">
                         <copy>
@@ -102,7 +101,7 @@
                             <to>$FindIn1.part/ns0:HOTEL_Record/ns0:ID</to>
                         </copy>
                     </assign>
-                    <invoke name="InvokeFind2" partnerLink="PartnerLink2" operation="find" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/FindHotel" portType="tns:jdbcPortType" inputVariable="FindIn1" outputVariable="FindOut1"/>
+                    <invoke name="InvokeFind2" partnerLink="Hotels" operation="find" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/FindHotel" portType="tns:jdbcPortType" inputVariable="FindIn1" outputVariable="FindOut1"/>
                     <if name="IfID2">
                         <condition>$FindOut1.part/ns0:HOTEL_Record/ns0:ID = $ReserveHotelOperationIn.id</condition>
                         <sequence name="Sequence3">
@@ -128,7 +127,7 @@
                                     <to>$InsertIn.part/ns0:HOTEL_RESERVATION_Record/ns0:TOTALPRICE</to>
                                 </copy>
                             </assign>
-                            <invoke name="InvokeInsert" partnerLink="PartnerLink3" operation="insert" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/ReserveHotel" portType="tns:jdbcPortType" inputVariable="InsertIn" outputVariable="InsertOut"/>
+                            <invoke name="InvokeInsert" partnerLink="Reservation" operation="insert" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/ReserveHotel" portType="tns:jdbcPortType" inputVariable="InsertIn" outputVariable="InsertOut"/>
                             <assign name="AssignResponse">
                                 <copy>
                                     <from>$FindOut1.part/ns0:HOTEL_Record/ns0:ID</from>
@@ -189,25 +188,25 @@
                             </assign>
                         </else>
                     </if>
-                    <reply name="Reply2" partnerLink="PartnerLink1" operation="reserveHotelOperation" portType="tns:HotelServicePortType" variable="ReserveHotelOperationOut"/>
+                    <reply name="Reply2" partnerLink="Client" operation="reserveHotelOperation" portType="tns:HotelServicePortType" variable="ReserveHotelOperationOut"/>
                 </sequence>
             </onMessage>
-            <onMessage partnerLink="PartnerLink1" operation="getHotelsOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/HotelService" portType="tns:HotelServicePortType" variable="GetHotelsOperationIn">
+            <onMessage partnerLink="Client" operation="getHotelsOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/HotelService" portType="tns:HotelServicePortType" variable="GetHotelsOperationIn">
                 <sequence name="Sequence4">
                     <assign name="AssignFind3">
                         <copy>
                             <from variable="GetHotelsOperationIn" part="location"/>
-                            <to>$FindIn2.part/ns0:HOTEL_Record/ns0:LOCATION</to>
+                            <to>$FindIn3.part/ns0:HOTEL_Record/ns0:LOCATION</to>
                         </copy>
                     </assign>
-                    <invoke name="InvokeFind3" partnerLink="PartnerLink4" operation="find" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/FindHotels" portType="tns:jdbcPortType" inputVariable="FindIn2" outputVariable="FindOut2"/>
+                    <invoke name="InvokeFind3" partnerLink="Hotels" operation="find" xmlns:tns="http://j2ee.netbeans.org/wsdl/HotelService/FindHotel" portType="tns:jdbcPortType" inputVariable="FindIn3" outputVariable="FindOut3"/>
                     <if name="IfLocation">
-                        <condition>$FindOut2.part/ns0:HOTEL_Record/ns0:LOCATION = $GetHotelsOperationIn.location</condition>
+                        <condition>$FindOut3.part/ns0:HOTEL_Record/ns0:LOCATION = $GetHotelsOperationIn.location</condition>
                         <assign name="AssignResponse2">
                             <copy>
-                                    <from>$FindOut2.part/ns0:HOTEL_Record/ns0:ID</from>
-                                        <to>$GetHotelsOperationOut.results/ns1:Hotel/ns1:id</to>
-                                </copy>
+                                <from>$FindOut3.part/ns0:HOTEL_Record/ns0:ID</from>
+                                <to>$GetHotelsOperationOut.results/ns1:Hotel/ns1:id</to>
+                            </copy>
                         </assign>
                         <else>
                             <assign name="AssignBad3">
@@ -218,11 +217,12 @@
                             </assign>
                         </else>
                     </if>
-                    <reply name="Reply3" partnerLink="PartnerLink1" operation="getHotelsOperation" portType="tns:HotelServicePortType" variable="GetHotelsOperationOut"/>
+                    <reply name="Reply3" partnerLink="Client" operation="getHotelsOperation" portType="tns:HotelServicePortType" variable="GetHotelsOperationOut"/>
                 </sequence>
             </onMessage>
         </pick>
     </sequence>
 </process>
+
 
 

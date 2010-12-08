@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="HotelService/HotelService.wsdl" uri="ProcessModel/src/_references/_projects/HotelService/src/HotelService.wsdl"/>
+    <system systemId="HotelService.xsd" uri="ProcessModel/src/_references/_projects/HotelService/src/HotelService.xsd"/>
+    <system systemId="DinnerService/DinnerService.wsdl" uri="ProcessModel/src/_references/_projects/DinnerService/src/DinnerService.wsdl"/>
+    <system systemId="DinnerService.xsd" uri="ProcessModel/src/_references/_projects/DinnerService/src/DinnerService.xsd"/>
+    <system systemId="AgencyService/AgencyService.wsdl" uri="ProcessModel/src/_references/_projects/AgencyService/src/AgencyService.wsdl"/>
+    <system systemId="AgencyService.xsd" uri="ProcessModel/src/_references/_projects/AgencyService/src/AgencyService.xsd"/>
+    <system systemId="BoxService/BoxService.xsd" uri="ProcessModel/src/_references/_projects/BoxService/src/BoxService.xsd"/>
+    <system systemId="TravelService/TravelService.wsdl" uri="ProcessModel/src/_references/_projects/TravelService/src/TravelService.wsdl"/>
+    <system systemId="TravelService.xsd" uri="ProcessModel/src/_references/_projects/TravelService/src/TravelService.xsd"/>
+    <system systemId="BoxService/BoxService.wsdl" uri="ProcessModel/src/_references/_projects/BoxService/src/BoxService.wsdl"/>
+    <system systemId="BoxService.xsd" uri="ProcessModel/src/_references/_projects/BoxService/src/BoxService.xsd"/>
+</catalog>

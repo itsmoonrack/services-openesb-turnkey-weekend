@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://xml.netbeans.org/schema/AgencyService"
+    xmlns:tns="http://xml.netbeans.org/schema/AgencyService"
+    elementFormDefault="qualified">
+    <xsd:complexType name="Manifestation">
+        <xsd:sequence>
+            <xsd:element name="id" type="xsd:int"/>
+            <xsd:element name="type" type="xsd:string"/>
+            <xsd:element name="name" type="xsd:string"/>
+            <xsd:element name="adress" type="xsd:string"/>
+            <xsd:element name="location" type="xsd:string"/>
+            <xsd:element name="priceTicket" type="xsd:double"/>
+            <xsd:element name="Date" type="xsd:date"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ManifestationReservation">
+        <xsd:sequence>
+            <xsd:element name="id" type="xsd:int"/>
+            <xsd:element name="totalPrice" type="xsd:double"/>
+            <xsd:element name="date" type="xsd:date"/>
+            <xsd:element name="manifestation" type="tns:Manifestation"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ListOfManifestations">
+        <xsd:sequence>
+            <xsd:element name="Manifestation" maxOccurs="unbounded" minOccurs="0" type="tns:Manifestation"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

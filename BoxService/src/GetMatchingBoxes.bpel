@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process
+    name="GetMatchingBoxes"
+    targetNamespace="http://enterprise.netbeans.org/bpel/BoxService/GetMatchingBoxes"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/BoxService/GetMatchingBoxes"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:sxed2="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2" xmlns:ns0="http://j2ee.netbeans.org/xsd/tableSchema" xmlns:ns1="http://xml.netbeans.org/schema/BoxService">
+    <import namespace="http://j2ee.netbeans.org/wsdl/BoxService" location="BoxService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://j2ee.netbeans.org/wsdl/BoxService/JavaBoxDB" location="DB/JavaBoxDB.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="JavaDB" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService/JavaBoxDB" partnerLinkType="tns:jdbcpartner" partnerRole="jdbcPortTypeRole"/>
+        <partnerLink name="Client" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService" partnerLinkType="tns:clientPartnerLink" myRole="clientRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="FindOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService/JavaBoxDB" messageType="tns:outputMsg"/>
+        <variable name="FindIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService/JavaBoxDB" messageType="tns:inputMsg"/>
+        <variable name="GetMatchingBoxesOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService" messageType="tns:getMatchingBoxesResponse"/>
+        <variable name="GetMatchingBoxesIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService" messageType="tns:getMatchingBoxesRequest"/>
+    </variables>
+    <sequence>
+        <receive name="Receive1" createInstance="yes" partnerLink="Client" operation="getMatchingBoxes" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService" portType="tns:client" variable="GetMatchingBoxesIn"/>
+        <assign name="Assign1">
+            <copy>
+                <from variable="GetMatchingBoxesIn" part="location"/>
+                <to>$FindIn.part/ns0:BOX_Record/ns0:LOCATION</to>
+            </copy>
+            <copy>
+                <from>substring-before($GetMatchingBoxesIn.startDate, 'T')</from>
+                <to>$FindIn.part/ns0:BOX_Record/ns0:START_DATE</to>
+            </copy>
+            <copy>
+                <from>substring-before($GetMatchingBoxesIn.endDate, 'T')</from>
+                <to>$FindIn.part/ns0:BOX_Record/ns0:END_DATE</to>
+            </copy>
+        </assign>
+        <invoke name="Invoke1" partnerLink="JavaDB" operation="find" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService/JavaBoxDB" portType="tns:jdbcPortType" inputVariable="FindIn" outputVariable="FindOut"/>
+        <assign name="Assign2">
+            <copy>
+                <from>$FindOut.part/ns0:BOX_Record/ns0:ID</from>
+                <to>$GetMatchingBoxesOut.result/ns1:boxes/ns1:box/ns1:id</to>
+            </copy>
+            <copy>
+                <from>$FindOut.part/ns0:BOX_Record/ns0:LOCATION</from>
+                <to>$GetMatchingBoxesOut.result/ns1:boxes/ns1:box/ns1:address</to>
+            </copy>
+            <copy>
+                <from>$FindOut.part/ns0:BOX_Record/ns0:DESCRIPTION</from>
+                <to>$GetMatchingBoxesOut.result/ns1:boxes/ns1:box/ns1:description</to>
+            </copy>
+            <copy>
+                <from>$FindOut.part/ns0:BOX_Record/ns0:PRICE</from>
+                <to>$GetMatchingBoxesOut.result/ns1:boxes/ns1:box/ns1:price</to>
+            </copy>
+            <copy>
+                <from>$FindOut.part/ns0:BOX_Record/ns0:TRAVEL_ID</from>
+                <to>$GetMatchingBoxesOut.result/ns1:boxes/ns1:box/ns1:travel_id</to>
+            </copy>
+            <copy>
+                <from>$FindOut.part/ns0:BOX_Record/ns0:HOTEL_ID</from>
+                <to>$GetMatchingBoxesOut.result/ns1:boxes/ns1:box/ns1:hotel_id</to>
+            </copy>
+            <copy>
+                <from>$FindOut.part/ns0:BOX_Record/ns0:RESTAURANT_ID</from>
+                <to>$GetMatchingBoxesOut.result/ns1:boxes/ns1:box/ns1:restaurant_id</to>
+            </copy>
+            <copy>
+                <from>$FindOut.part/ns0:BOX_Record/ns0:ACTIVITY_ID</from>
+                <to>$GetMatchingBoxesOut.result/ns1:boxes/ns1:box/ns1:activity_id</to>
+            </copy>
+            <copy>
+                <from>$FindOut.part/ns0:BOX_Record/ns0:ACTIVITY_TYPE</from>
+                <to>$GetMatchingBoxesOut.result/ns1:boxes/ns1:box/ns1:activity_type</to>
+            </copy>
+            <copy>
+                <from>concat($FindOut.part/ns0:BOX_Record/ns0:START_DATE, 'T', $FindOut.part/ns0:BOX_Record/ns0:START_TIME)</from>
+                <to>$GetMatchingBoxesOut.result/ns1:boxes/ns1:box/ns1:startDate</to>
+            </copy>
+            <copy>
+                <from>concat($FindOut.part/ns0:BOX_Record/ns0:END_DATE, 'T', $FindOut.part/ns0:BOX_Record/ns0:END_TIME)</from>
+                <to>$GetMatchingBoxesOut.result/ns1:boxes/ns1:box/ns1:endDate</to>
+            </copy>
+        </assign>
+        <reply name="Reply1" partnerLink="Client" operation="getMatchingBoxes" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService" portType="tns:client" variable="GetMatchingBoxesOut"/>
+    </sequence>
+</process>
+

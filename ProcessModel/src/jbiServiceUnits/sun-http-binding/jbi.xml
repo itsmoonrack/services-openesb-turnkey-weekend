@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<jbi xmlns="http://java.sun.com/xml/ns/jbi" xmlns:ns1="http://enterprise.netbeans.org/bpel/BoxService/CreateBox" xmlns:ns2="http://j2ee.netbeans.org/wsdl/BoxService/JavaBoxDB" xmlns:ns3="http://j2ee.netbeans.org/wsdl/BoxService" version="1.0">
-    <services binding-component="true">
-        <consumes endpoint-name="adminPort" interface-name="ns3:administrator" service-name="ns3:BoxService"/>
-    </services>
-</jbi>

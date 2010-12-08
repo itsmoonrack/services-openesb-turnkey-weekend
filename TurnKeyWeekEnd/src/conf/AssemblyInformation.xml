@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jbi xmlns="http://java.sun.com/xml/ns/jbi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/jbi ./jbi.xsd">
+    <service-assembly>
+        <identification>
+            <name>TurnKeyWeekEnd</name>
+            <description>Represents the Service Assembly of TurnKeyWeekEnd</description>
+        </identification>
+        <service-unit>
+            <identification>
+                <name>TurnKeyWeekEnd-DinnerService</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>DinnerService.jar</artifacts-zip>
+                <component-name>sun-bpel-engine</component-name>
+            </target>
+        </service-unit>
+        <service-unit>
+            <identification>
+                <name>TurnKeyWeekEnd-BoxService</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>BoxService.jar</artifacts-zip>
+                <component-name>sun-bpel-engine</component-name>
+            </target>
+        </service-unit>
+        <service-unit>
+            <identification>
+                <name>TurnKeyWeekEnd-HotelService</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>HotelService.jar</artifacts-zip>
+                <component-name>sun-bpel-engine</component-name>
+            </target>
+        </service-unit>
+        <service-unit>
+            <identification>
+                <name>TurnKeyWeekEnd-TravelService</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>TravelService.jar</artifacts-zip>
+                <component-name>sun-bpel-engine</component-name>
+            </target>
+        </service-unit>
+        <service-unit>
+            <identification>
+                <name>TurnKeyWeekEnd-AgencyService</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>AgencyService.jar</artifacts-zip>
+                <component-name>sun-bpel-engine</component-name>
+            </target>
+        </service-unit>
+        <service-unit>
+            <identification>
+                <name>TurnKeyWeekEnd-ProcessModel</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>ProcessModel.jar</artifacts-zip>
+                <component-name>sun-bpel-engine</component-name>
+            </target>
+        </service-unit>
+        <service-unit>
+            <identification>
+                <name>TurnKeyWeekEnd-sun-database-binding</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>sun-database-binding.jar</artifacts-zip>
+                <component-name>sun-database-binding</component-name>
+            </target>
+        </service-unit>
+        <service-unit>
+            <identification>
+                <name>TurnKeyWeekEnd-sun-email-binding</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>sun-email-binding.jar</artifacts-zip>
+                <component-name>sun-email-binding</component-name>
+            </target>
+        </service-unit>
+        <service-unit>
+            <identification>
+                <name>TurnKeyWeekEnd-sun-file-binding</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>sun-file-binding.jar</artifacts-zip>
+                <component-name>sun-file-binding</component-name>
+            </target>
+        </service-unit>
+        <service-unit>
+            <identification>
+                <name>TurnKeyWeekEnd-sun-ftp-binding</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>sun-ftp-binding.jar</artifacts-zip>
+                <component-name>sun-ftp-binding</component-name>
+            </target>
+        </service-unit>
+        <service-unit>
+            <identification>
+                <name>TurnKeyWeekEnd-sun-http-binding</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>sun-http-binding.jar</artifacts-zip>
+                <component-name>sun-http-binding</component-name>
+            </target>
+        </service-unit>
+        <service-unit>
+            <identification>
+                <name>TurnKeyWeekEnd-sun-jms-binding</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>sun-jms-binding.jar</artifacts-zip>
+                <component-name>sun-jms-binding</component-name>
+            </target>
+        </service-unit>
+        <service-unit>
+            <identification>
+                <name>TurnKeyWeekEnd-sun-ldap-binding</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>sun-ldap-binding.jar</artifacts-zip>
+                <component-name>sun-ldap-binding</component-name>
+            </target>
+        </service-unit>
+        <service-unit>
+            <identification>
+                <name>TurnKeyWeekEnd-sun-rest-binding</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>sun-rest-binding.jar</artifacts-zip>
+                <component-name>sun-rest-binding</component-name>
+            </target>
+        </service-unit>
+        <service-unit>
+            <identification>
+                <name>TurnKeyWeekEnd-sun-scheduler-binding</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>sun-scheduler-binding.jar</artifacts-zip>
+                <component-name>sun-scheduler-binding</component-name>
+            </target>
+        </service-unit>
+    </service-assembly>
+</jbi>

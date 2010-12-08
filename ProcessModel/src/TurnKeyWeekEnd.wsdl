@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="TurnKeyWeekEnd" targetNamespace="http://j2ee.netbeans.org/wsdl/ProcessModel/TurnKeyWeekEnd"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://j2ee.netbeans.org/wsdl/ProcessModel/TurnKeyWeekEnd" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns="http://xml.netbeans.org/schema/BoxService">
+    <types>
+        <xsd:schema targetNamespace="http://j2ee.netbeans.org/wsdl/ProcessModel/TurnKeyWeekEnd">
+            <xsd:import namespace="http://xml.netbeans.org/schema/BoxService" schemaLocation="BoxService/BoxService.xsd"/>
+        </xsd:schema>
+    </types>
+    <message name="reserveTWERequest">
+        <part name="boxID" type="xsd:int"/>
+    </message>
+    <message name="reserveTWEResponse">
+        <part name="part1" type="xsd:string"/>
+    </message>
+    <message name="searchTWERequest">
+        <part name="from" type="xsd:string"/>
+        <part name="destination" type="xsd:string"/>
+        <part name="startDate" type="xsd:dateTime"/>
+        <part name="endDate" type="xsd:dateTime"/>
+        <part name="nbPersons" type="xsd:int"/>
+    </message>
+    <message name="searchTWEResponse">
+        <part name="boxes" type="ns:ListOfBoxPreviews"/>
+        <part name="travelPrice" type="xsd:double"/>
+    </message>
+    <portType name="TurnKeyWeekEndPortType">
+        <operation name="reserveTWE">
+            <input name="input1" message="tns:reserveTWERequest"/>
+            <output name="output1" message="tns:reserveTWEResponse"/>
+        </operation>
+        <operation name="searchTWE">
+            <input name="input2" message="tns:searchTWERequest"/>
+            <output name="output2" message="tns:searchTWEResponse"/>
+        </operation>
+    </portType>
+    <plnk:partnerLinkType name="TurnKeyWeekEnd">
+        <!-- A partner link type is automatically generated when a new port type is added. Partner link types are used by BPEL processes.
+In a BPEL process, a partner link represents the interaction between the BPEL process and a partner service. Each partner link is associated with a partner link type.
+A partner link type characterizes the conversational relationship between two services. The partner link type can have one or two roles.-->
+        <plnk:role name="TurnKeyWeekEndPortTypeRole" portType="tns:TurnKeyWeekEndPortType"/>
+    </plnk:partnerLinkType>
+</definitions>
+
+
+
+
+

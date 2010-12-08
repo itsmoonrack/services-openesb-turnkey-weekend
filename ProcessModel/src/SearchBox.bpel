@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process
+    name="SearchBox"
+    targetNamespace="http://enterprise.netbeans.org/bpel/ProcessModel/SearchBox"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/ProcessModel/SearchBox"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:sxed2="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2" xmlns:ns0="http://xml.netbeans.org/schema/BoxService" xmlns:ns1="http://xml.netbeans.org/schema/TravelService">
+    <import namespace="http://j2ee.netbeans.org/wsdl/ProcessModel/TurnKeyWeekEnd" location="TurnKeyWeekEnd.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://j2ee.netbeans.org/wsdl/TravelService/TravelService" location="TravelService/TravelService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://j2ee.netbeans.org/wsdl/BoxService" location="BoxService/BoxService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="Travel" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/TravelService" partnerLinkType="tns:TravelService" partnerRole="TravelServicePortTypeRole"/>
+        <partnerLink name="Box" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService" partnerLinkType="tns:clientPartnerLink" partnerRole="clientRole"/>
+        <partnerLink name="Search" xmlns:tns="http://j2ee.netbeans.org/wsdl/ProcessModel/TurnKeyWeekEnd" partnerLinkType="tns:TurnKeyWeekEnd" myRole="TurnKeyWeekEndPortTypeRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="GetMatchingBoxesOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService" messageType="tns:getMatchingBoxesResponse"/>
+        <variable name="GetMatchingBoxesIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService" messageType="tns:getMatchingBoxesRequest"/>
+        <variable name="GetTravelOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/TravelService" messageType="tns:getTravelOperationResponse"/>
+        <variable name="GetTravelOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/TravelService" messageType="tns:getTravelOperationRequest"/>
+        <variable name="SearchTWEOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/ProcessModel/TurnKeyWeekEnd" messageType="tns:searchTWEResponse"/>
+        <variable name="SearchTWEIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/ProcessModel/TurnKeyWeekEnd" messageType="tns:searchTWERequest"/>
+    </variables>
+    <sequence>
+        <receive name="Receive1" createInstance="yes" partnerLink="Search" operation="searchTWE" xmlns:tns="http://j2ee.netbeans.org/wsdl/ProcessModel/TurnKeyWeekEnd" portType="tns:TurnKeyWeekEndPortType" variable="SearchTWEIn"/>
+        <assign name="Assign1">
+            <copy>
+                <from variable="SearchTWEIn" part="destination"/>
+                <to variable="GetMatchingBoxesIn" part="location"/>
+            </copy>
+            <copy>
+                <from variable="SearchTWEIn" part="startDate"/>
+                <to variable="GetMatchingBoxesIn" part="startDate"/>
+            </copy>
+            <copy>
+                <from variable="SearchTWEIn" part="endDate"/>
+                <to variable="GetMatchingBoxesIn" part="endDate"/>
+            </copy>
+            <copy>
+                <from variable="SearchTWEIn" part="from"/>
+                <to variable="GetTravelOperationIn" part="locationFrom"/>
+            </copy>
+            <copy>
+                <from variable="SearchTWEIn" part="destination"/>
+                <to variable="GetTravelOperationIn" part="locationTo"/>
+            </copy>
+            <copy>
+                <from variable="SearchTWEIn" part="startDate"/>
+                <to variable="GetTravelOperationIn" part="date"/>
+            </copy>
+        </assign>
+        <invoke name="Invoke1" partnerLink="Travel" operation="getTravelOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/TravelService" portType="tns:TravelServicePortType" inputVariable="GetTravelOperationIn" outputVariable="GetTravelOperationOut"/>
+        <invoke name="Invoke2" partnerLink="Box" operation="getMatchingBoxes" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService" portType="tns:client" inputVariable="GetMatchingBoxesIn" outputVariable="GetMatchingBoxesOut"/>
+        <assign name="Assign2">
+            <copy>
+                <from>$GetMatchingBoxesOut.result/ns0:boxes</from>
+                <to>$SearchTWEOut.boxes/ns0:boxes</to>
+            </copy>
+            <copy>
+                <from>$GetTravelOperationOut.result/ns1:price</from>
+                <to variable="SearchTWEOut" part="travelPrice"/>
+            </copy>
+        </assign>
+        <reply name="Reply1" partnerLink="Search" operation="searchTWE" xmlns:tns="http://j2ee.netbeans.org/wsdl/ProcessModel/TurnKeyWeekEnd" portType="tns:TurnKeyWeekEndPortType" variable="SearchTWEOut"/>
+    </sequence>
+</process>
+

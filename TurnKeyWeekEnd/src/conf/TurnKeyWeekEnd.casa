@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<casa xmlns="http://java.sun.com/xml/ns/casa" xmlns:ns1="http://j2ee.netbeans.org/wsdl/BoxService" xmlns:ns10="http://enterprise.netbeans.org/bpel/BoxService/CreateBox" xmlns:ns11="http://enterprise.netbeans.org/bpel/BoxService/GetMatchingBoxes" xmlns:ns12="http://enterprise.netbeans.org/bpel/BoxService/ReserveBox" xmlns:ns13="http://enterprise.netbeans.org/bpel/HotelService/hotelService" xmlns:ns14="http://enterprise.netbeans.org/bpel/TravelService/TravelService" xmlns:ns15="http://enterprise.netbeans.org/bpel/AgencyService/agencyService" xmlns:ns16="http://enterprise.netbeans.org/bpel/ProcessModel/ReserveBox" xmlns:ns17="http://j2ee.netbeans.org/wsdl/ProcessModel/TurnKeyWeekEnd" xmlns:ns18="http://enterprise.netbeans.org/bpel/ProcessModel/SearchBox" xmlns:ns2="http://j2ee.netbeans.org/wsdl/DinnerService/DinnerService" xmlns:ns3="http://j2ee.netbeans.org/wsdl/HotelService/HotelService" xmlns:ns4="http://j2ee.netbeans.org/wsdl/TravelService/TravelService" xmlns:ns5="http://j2ee.netbeans.org/wsdl/AgencyService/AgencyService" xmlns:ns6="http://j2ee.netbeans.org/wsdl/AgencyService/ReserveManifestation" xmlns:ns7="http://j2ee.netbeans.org/wsdl/AgencyService/FindManifestation" xmlns:ns8="http://j2ee.netbeans.org/wsdl/AgencyService/FindManifestations" xmlns:ns9="http://enterprise.netbeans.org/bpel/DinnerService/dinnerService" xmlns:xlink="http://www.w3.org/2000/xlink">
+    <endpoints>
+        <endpoint endpoint-name="adminPort" interface-name="ns1:administrator" name="endpoint1" service-name="ns1:BoxService"/>
+        <endpoint endpoint-name="clientPort" interface-name="ns1:client" name="endpoint2" service-name="ns1:BoxService"/>
+        <endpoint endpoint-name="DinnerServicePort" interface-name="ns2:DinnerServicePortType" name="endpoint3" service-name="ns2:DinnerServiceService"/>
+        <endpoint endpoint-name="HotelServicePort" interface-name="ns3:HotelServicePortType" name="endpoint4" service-name="ns3:HotelServiceService"/>
+        <endpoint endpoint-name="TravelServicePort" interface-name="ns4:TravelServicePortType" name="endpoint5" service-name="ns4:TravelServiceService"/>
+        <endpoint endpoint-name="AgencyServicePort" interface-name="ns5:AgencyServicePortType" name="endpoint6" service-name="ns5:AgencyServiceService"/>
+        <endpoint endpoint-name="port" interface-name="ns6:jdbcPortType" name="endpoint7" service-name="ns6:service"/>
+        <endpoint endpoint-name="port" interface-name="ns7:jdbcPortType" name="endpoint8" service-name="ns7:service"/>
+        <endpoint endpoint-name="port" interface-name="ns8:jdbcPortType" name="endpoint9" service-name="ns8:service"/>
+        <endpoint display-name="Client" endpoint-name="DinnerServicePortTypeRole_myRole" file-path="DinnerService.bpel" interface-name="ns2:DinnerServicePortType" name="endpoint10" process-name="DinnerService" service-name="ns9:Client"/>
+        <endpoint display-name="Administrator" endpoint-name="administratorRole_myRole" file-path="CreateBox.bpel" interface-name="ns1:administrator" name="endpoint11" process-name="CreateBox" service-name="ns10:Administrator"/>
+        <endpoint display-name="Client" endpoint-name="clientRole_myRole" file-path="GetMatchingBoxes.bpel" interface-name="ns1:client" name="endpoint12" process-name="GetMatchingBoxes" service-name="ns11:Client"/>
+        <endpoint display-name="client" endpoint-name="clientRole_myRole" file-path="ReserveBox.bpel" interface-name="ns1:client" name="endpoint13" process-name="ReserveBox" service-name="ns12:client"/>
+        <endpoint display-name="Client" endpoint-name="HotelServicePortTypeRole_myRole" file-path="HotelService.bpel" interface-name="ns3:HotelServicePortType" name="endpoint14" process-name="HotelService" service-name="ns13:Client"/>
+        <endpoint display-name="Client" endpoint-name="TravelServicePortTypeRole_myRole" file-path="TravelService.bpel" interface-name="ns4:TravelServicePortType" name="endpoint15" process-name="TravelService" service-name="ns14:Client"/>
+        <endpoint display-name="Client" endpoint-name="AgencyServicePortTypeRole_myRole" file-path="AgencyService.bpel" interface-name="ns5:AgencyServicePortType" name="endpoint16" process-name="AgencyService" service-name="ns15:Client"/>
+        <endpoint display-name="Client" endpoint-name="clientRole_myRole" file-path="ReserveBox.bpel" interface-name="ns1:client" name="endpoint17" process-name="ReserveBox" service-name="ns12:Client"/>
+        <endpoint display-name="Reservation" endpoint-name="TurnKeyWeekEndPortTypeRole_myRole" file-path="ReserveBox.bpel" interface-name="ns17:TurnKeyWeekEndPortType" name="endpoint18" process-name="ReserveBox" service-name="ns16:Reservation"/>
+        <endpoint display-name="Search" endpoint-name="TurnKeyWeekEndPortTypeRole_myRole" file-path="SearchBox.bpel" interface-name="ns17:TurnKeyWeekEndPortType" name="endpoint19" process-name="SearchBox" service-name="ns18:Search"/>
+        <endpoint display-name="Box" endpoint-name="clientRole_partnerRole" file-path="ReserveBox.bpel" interface-name="ns1:client" name="endpoint20" process-name="ReserveBox" service-name="ns16:Box"/>
+        <endpoint display-name="Travel" endpoint-name="TravelServicePortTypeRole_partnerRole" file-path="ReserveBox.bpel" interface-name="ns4:TravelServicePortType" name="endpoint21" process-name="ReserveBox" service-name="ns16:Travel"/>
+        <endpoint display-name="Agency" endpoint-name="AgencyServicePortTypeRole_partnerRole" file-path="ReserveBox.bpel" interface-name="ns5:AgencyServicePortType" name="endpoint22" process-name="ReserveBox" service-name="ns16:Agency"/>
+        <endpoint display-name="Restaurant" endpoint-name="DinnerServicePortTypeRole_partnerRole" file-path="ReserveBox.bpel" interface-name="ns2:DinnerServicePortType" name="endpoint23" process-name="ReserveBox" service-name="ns16:Restaurant"/>
+        <endpoint display-name="Hotel" endpoint-name="HotelServicePortTypeRole_partnerRole" file-path="ReserveBox.bpel" interface-name="ns3:HotelServicePortType" name="endpoint24" process-name="ReserveBox" service-name="ns16:Hotel"/>
+        <endpoint display-name="Travel" endpoint-name="TravelServicePortTypeRole_partnerRole" file-path="SearchBox.bpel" interface-name="ns4:TravelServicePortType" name="endpoint25" process-name="SearchBox" service-name="ns18:Travel"/>
+        <endpoint display-name="Box" endpoint-name="clientRole_partnerRole" file-path="SearchBox.bpel" interface-name="ns1:client" name="endpoint26" process-name="SearchBox" service-name="ns18:Box"/>
+    </endpoints>
+    <service-units>
+        <service-engine-service-unit artifacts-zip="DinnerService.jar" component-name="sun-bpel-engine" defined="true" description="Represents this Service Unit" internal="false" name="TurnKeyWeekEnd-DinnerService" unit-name="DinnerService" unknown="false" x="138" y="99">
+            <provides endpoint="endpoint10"/>
+        </service-engine-service-unit>
+        <service-engine-service-unit artifacts-zip="BoxService.jar" component-name="sun-bpel-engine" defined="true" description="Represents this Service Unit" internal="false" name="TurnKeyWeekEnd-BoxService" unit-name="BoxService" unknown="false" x="146" y="238">
+            <provides endpoint="endpoint11"/>
+            <provides endpoint="endpoint12"/>
+            <provides endpoint="endpoint17"/>
+        </service-engine-service-unit>
+        <service-engine-service-unit artifacts-zip="HotelService.jar" component-name="sun-bpel-engine" defined="true" description="Represents this Service Unit" internal="false" name="TurnKeyWeekEnd-HotelService" unit-name="HotelService" unknown="false" x="142" y="465">
+            <provides endpoint="endpoint14"/>
+        </service-engine-service-unit>
+        <service-engine-service-unit artifacts-zip="TravelService.jar" component-name="sun-bpel-engine" defined="true" description="Represents this Service Unit" internal="false" name="TurnKeyWeekEnd-TravelService" unit-name="TravelService" unknown="false" x="139" y="604">
+            <provides endpoint="endpoint15"/>
+        </service-engine-service-unit>
+        <service-engine-service-unit artifacts-zip="AgencyService.jar" component-name="sun-bpel-engine" defined="true" description="Represents this Service Unit" internal="false" name="TurnKeyWeekEnd-AgencyService" unit-name="AgencyService" unknown="false" x="136" y="743">
+            <provides endpoint="endpoint16"/>
+        </service-engine-service-unit>
+        <service-engine-service-unit artifacts-zip="ProcessModel.jar" component-name="sun-bpel-engine" defined="true" description="Represents this Service Unit" internal="true" name="TurnKeyWeekEnd-ProcessModel" unit-name="ProcessModel" unknown="false" x="150" y="99">
+            <provides endpoint="endpoint18"/>
+            <provides endpoint="endpoint19"/>
+            <consumes endpoint="endpoint20"/>
+            <consumes endpoint="endpoint21"/>
+            <consumes endpoint="endpoint22"/>
+            <consumes endpoint="endpoint23"/>
+            <consumes endpoint="endpoint24"/>
+            <consumes endpoint="endpoint25"/>
+            <consumes endpoint="endpoint26"/>
+        </service-engine-service-unit>
+        <binding-component-service-unit artifacts-zip="sun-database-binding.jar" component-name="sun-database-binding" description="Represents this Service Unit" name="TurnKeyWeekEnd-sun-database-binding" unit-name="sun-database-binding">
+            <ports>
+                <port x="67" y="567">
+                    <link xlink:href="../jbiServiceUnits/AgencyService/BD/FindManifestation.wsdl#xpointer(/definitions/service[@name='service']/port[@name='port'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint8"/>
+                    <provides endpoint="endpoint8"/>
+                </port>
+                <port x="67" y="461">
+                    <link xlink:href="../jbiServiceUnits/AgencyService/BD/FindManifestations.wsdl#xpointer(/definitions/service[@name='service']/port[@name='port'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint9"/>
+                    <provides endpoint="endpoint9"/>
+                </port>
+                <port x="67" y="355">
+                    <link xlink:href="../jbiServiceUnits/AgencyService/BD/ReserveManifestation.wsdl#xpointer(/definitions/service[@name='service']/port[@name='port'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint7"/>
+                    <provides endpoint="endpoint7"/>
+                </port>
+            </ports>
+        </binding-component-service-unit>
+        <binding-component-service-unit artifacts-zip="sun-http-binding.jar" component-name="sun-http-binding" description="Represents this Service Unit" name="TurnKeyWeekEnd-sun-http-binding" unit-name="sun-http-binding">
+            <ports>
+                <port x="67" y="673">
+                    <link xlink:href="../jbiServiceUnits/AgencyService/AgencyService.wsdl#xpointer(/definitions/service[@name='AgencyServiceService']/port[@name='AgencyServicePort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint6"/>
+                    <provides endpoint="endpoint6"/>
+                </port>
+                <port x="67" y="276">
+                    <link xlink:href="../jbiServiceUnits/BoxService/BoxService.wsdl#xpointer(/definitions/service[@name='BoxService']/port[@name='clientPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint2"/>
+                    <provides endpoint="endpoint2"/>
+                </port>
+                <port x="67" y="197">
+                    <link xlink:href="../jbiServiceUnits/BoxService/BoxService.wsdl#xpointer(/definitions/service[@name='BoxService']/port[@name='adminPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint1"/>
+                    <provides endpoint="endpoint1"/>
+                </port>
+                <port x="67" y="118">
+                    <link xlink:href="../jbiServiceUnits/DinnerService/DinnerService.wsdl#xpointer(/definitions/service[@name='DinnerServiceService']/port[@name='DinnerServicePort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint3"/>
+                    <provides endpoint="endpoint3"/>
+                </port>
+                <port x="67" y="39">
+                    <link xlink:href="../jbiServiceUnits/HotelService/HotelService.wsdl#xpointer(/definitions/service[@name='HotelServiceService']/port[@name='HotelServicePort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint4"/>
+                    <provides endpoint="endpoint4"/>
+                </port>
+                <port x="67" y="752">
+                    <link xlink:href="../jbiServiceUnits/META-INF/ProcessModel/src/_references/_projects/TravelService/src/TravelService.wsdl#xpointer(/definitions/service[@name='TravelServiceService']/port[@name='TravelServicePort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint5"/>
+                    <provides endpoint="endpoint5"/>
+                </port>
+            </ports>
+        </binding-component-service-unit>
+    </service-units>
+    <connections>
+        <connection consumer="endpoint3" provider="endpoint10" state="unchanged"/>
+        <connection consumer="endpoint2" provider="endpoint12" state="unchanged"/>
+        <connection consumer="endpoint4" provider="endpoint14" state="unchanged"/>
+        <connection consumer="endpoint1" provider="endpoint11" state="unchanged"/>
+        <connection consumer="endpoint5" provider="endpoint15" state="unchanged"/>
+        <connection consumer="endpoint20" provider="endpoint2" state="unchanged"/>
+        <connection consumer="endpoint26" provider="endpoint2" state="unchanged"/>
+        <connection consumer="endpoint23" provider="endpoint3" state="unchanged"/>
+        <connection consumer="endpoint24" provider="endpoint4" state="unchanged"/>
+        <connection consumer="endpoint21" provider="endpoint5" state="unchanged"/>
+        <connection consumer="endpoint25" provider="endpoint5" state="unchanged"/>
+        <connection consumer="endpoint22" provider="endpoint6" state="unchanged"/>
+    </connections>
+    <porttypes>
+        <link xlink:href="../jbiServiceUnits/AgencyService/AgencyService.wsdl#xpointer(/definitions/portType[@name='AgencyServicePortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/AgencyService/BD/FindManifestation.wsdl#xpointer(/definitions/portType[@name='jdbcPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/AgencyService/BD/FindManifestations.wsdl#xpointer(/definitions/portType[@name='jdbcPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/AgencyService/BD/ReserveManifestation.wsdl#xpointer(/definitions/portType[@name='jdbcPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/BoxService/BoxService.wsdl#xpointer(/definitions/portType[@name='client'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/BoxService/BoxService.wsdl#xpointer(/definitions/portType[@name='administrator'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/BoxService/DB/JavaBoxDB.wsdl#xpointer(/definitions/portType[@name='jdbcPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/BoxService/DB/JavaBoxReservationDB.wsdl#xpointer(/definitions/portType[@name='jdbcPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/DinnerService/BD/FindRestaurant.wsdl#xpointer(/definitions/portType[@name='jdbcPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/DinnerService/BD/FindRestaurants.wsdl#xpointer(/definitions/portType[@name='jdbcPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/DinnerService/BD/reserveRestaurant.wsdl#xpointer(/definitions/portType[@name='jdbcPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/DinnerService/DinnerService.wsdl#xpointer(/definitions/portType[@name='DinnerServicePortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/HotelService/BD/FindHotel.wsdl#xpointer(/definitions/portType[@name='jdbcPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/HotelService/BD/FindHotels.wsdl#xpointer(/definitions/portType[@name='jdbcPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/HotelService/BD/ReserveHotel.wsdl#xpointer(/definitions/portType[@name='jdbcPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/HotelService/HotelService.wsdl#xpointer(/definitions/portType[@name='HotelServicePortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/ProcessModel/src/_references/_projects/AgencyService/src/AgencyService.wsdl#xpointer(/definitions/portType[@name='AgencyServicePortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/ProcessModel/src/_references/_projects/BoxService/src/BoxService.wsdl#xpointer(/definitions/portType[@name='client'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/ProcessModel/src/_references/_projects/BoxService/src/BoxService.wsdl#xpointer(/definitions/portType[@name='administrator'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/ProcessModel/src/_references/_projects/DinnerService/src/DinnerService.wsdl#xpointer(/definitions/portType[@name='DinnerServicePortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/ProcessModel/src/_references/_projects/HotelService/src/HotelService.wsdl#xpointer(/definitions/portType[@name='HotelServicePortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/ProcessModel/src/_references/_projects/TravelService/src/TravelService.wsdl#xpointer(/definitions/portType[@name='TravelServicePortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/ProcessModel/TurnKeyWeekEnd.wsdl#xpointer(/definitions/portType[@name='TurnKeyWeekEndPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelService/BD/FindIdTravel.wsdl#xpointer(/definitions/portType[@name='jdbcPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelService/BD/FindTravel.wsdl#xpointer(/definitions/portType[@name='jdbcPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelService/BD/ReserveTravel.wsdl#xpointer(/definitions/portType[@name='jdbcPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelService/TravelService.wsdl#xpointer(/definitions/portType[@name='TravelServicePortType'])" xlink:type="simple"/>
+    </porttypes>
+    <bindings>
+        <link xlink:href="../jbiServiceUnits/META-INF/ProcessModel/src/_references/_projects/AgencyService/src/AgencyService.wsdl#xpointer(/definitions/binding[@name='AgencyServiceBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/ProcessModel/src/_references/_projects/BoxService/src/BoxService.wsdl#xpointer(/definitions/binding[@name='clientBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/ProcessModel/src/_references/_projects/BoxService/src/BoxService.wsdl#xpointer(/definitions/binding[@name='administratorBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/ProcessModel/src/_references/_projects/DinnerService/src/DinnerService.wsdl#xpointer(/definitions/binding[@name='DinnerServiceBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/ProcessModel/src/_references/_projects/HotelService/src/HotelService.wsdl#xpointer(/definitions/binding[@name='HotelServiceBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/ProcessModel/src/_references/_projects/TravelService/src/TravelService.wsdl#xpointer(/definitions/binding[@name='TravelServiceBinding'])" xlink:type="simple"/>
+    </bindings>
+    <services>
+        <link xlink:href="../jbiServiceUnits/META-INF/ProcessModel/src/_references/_projects/AgencyService/src/AgencyService.wsdl#xpointer(/definitions/service[@name='AgencyServiceService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/ProcessModel/src/_references/_projects/BoxService/src/BoxService.wsdl#xpointer(/definitions/service[@name='BoxService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/ProcessModel/src/_references/_projects/DinnerService/src/DinnerService.wsdl#xpointer(/definitions/service[@name='DinnerServiceService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/ProcessModel/src/_references/_projects/HotelService/src/HotelService.wsdl#xpointer(/definitions/service[@name='HotelServiceService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/ProcessModel/src/_references/_projects/TravelService/src/TravelService.wsdl#xpointer(/definitions/service[@name='TravelServiceService'])" xlink:type="simple"/>
+    </services>
+    <regions>
+        <region name="WSDL Endpoints" width="150"/>
+        <region name="JBI Modules" width="500"/>
+        <region name="External Modules" width="200"/>
+    </regions>
+</casa>

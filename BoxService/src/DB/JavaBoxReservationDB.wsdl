@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="newWSDL" targetNamespace="http://j2ee.netbeans.org/wsdl/BoxService/newWSDL" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://j2ee.netbeans.org/xsd/tableSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService/newWSDL" xmlns:plink="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:jdbc="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/">
+  <types>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/">
+            <xsd:import namespace="http://j2ee.netbeans.org/xsd/tableSchema" schemaLocation="BOX_RESERVATION.xsd"/>
+	</xsd:schema>
+  </types>
+  <message name="outputMsg">
+    <part name="part" element="ns:BOX_RESERVATION"/>
+  </message>
+  <message name="RetMsg">
+    <part name="part" type="xsd:int"/>
+  </message>
+  <message name="inputMsg">
+    <part name="part" element="ns:BOX_RESERVATION"/>
+  </message>
+  <portType name="jdbcPortType">
+    <operation name="insert">
+      <input name="inputInsert" message="tns:inputMsg"/>
+      <output name="outputInsert" message="tns:RetMsg"/>
+    </operation>
+    <operation name="update">
+      <input name="inputUpdate" message="tns:inputMsg"/>
+      <output name="outputUpdate" message="tns:RetMsg"/>
+    </operation>
+    <operation name="delete">
+      <input name="inputDelete" message="tns:inputMsg"/>
+      <output name="outputDelete" message="tns:RetMsg"/>
+    </operation>
+    <operation name="find">
+      <input name="inputFind" message="tns:inputMsg"/>
+      <output name="outputFind" message="tns:outputMsg"/>
+    </operation>
+    <operation name="pollrecords">
+      <input name="inputPoll" message="tns:inputMsg"/>
+    </operation>
+  </portType>
+  <binding name="binding" type="tns:jdbcPortType">
+    <jdbc:binding xmlns:jdbc="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/"/>
+    <operation name="insert">
+    <jdbc:operation xmlns:jdbc="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/"/>
+      <input name="inputInsert">
+    <jdbc:input xmlns:jdbc="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/" MarkColumnName="" MarkColumnValue="" MoveRowToTableName="" PKName="ID_REC" PollMilliSeconds="5000" PollingPostProcessing="MoveRow" TableName="BOX_RESERVATION" Transaction="NOTransaction" numberOfRecords="" operationType="insert" paramOrder="ID_REC,ID_BOX,ORDER_DATE,BILL" sql="insert into BOX_RESERVATION (ID_REC,ID_BOX,ORDER_DATE,BILL) values (?,?,?,?)"/>
+      </input>
+      <output name="outputInsert">
+    <jdbc:output xmlns:jdbc="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/" returnPartName="part"/>
+      </output>
+    </operation>
+    <operation name="update">
+    <jdbc:operation xmlns:jdbc="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/"/>
+      <input name="inputUpdate">
+    <jdbc:input xmlns:jdbc="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/" MarkColumnName="" MarkColumnValue="" MoveRowToTableName="" PKName="ID_REC" PollMilliSeconds="5000" PollingPostProcessing="MoveRow" TableName="BOX_RESERVATION" Transaction="NOTransaction" numberOfRecords="" operationType="update" paramOrder="ID_REC,ID_BOX,ORDER_DATE,BILL" sql="update BOX_RESERVATION set ID_REC  = ?,ID_BOX  = ?,ORDER_DATE  = ?,BILL  = ?"/>
+      </input>
+      <output name="outputUpdate">
+    <jdbc:output xmlns:jdbc="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/" returnPartName="part"/>
+      </output>
+    </operation>
+    <operation name="delete">
+    <jdbc:operation xmlns:jdbc="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/"/>
+      <input name="inputDelete">
+    <jdbc:input xmlns:jdbc="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/" MarkColumnName="" MarkColumnValue="" MoveRowToTableName="" PKName="ID_REC" PollMilliSeconds="5000" PollingPostProcessing="MoveRow" TableName="BOX_RESERVATION" Transaction="NOTransaction" numberOfRecords="" operationType="delete" paramOrder="" sql="delete from BOX_RESERVATION"/>
+      </input>
+      <output name="outputDelete">
+    <jdbc:output xmlns:jdbc="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/" returnPartName="part"/>
+      </output>
+    </operation>
+    <operation name="find">
+    <jdbc:operation xmlns:jdbc="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/"/>
+      <input name="inputFind">
+    <jdbc:input xmlns:jdbc="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/" MarkColumnName="" MarkColumnValue="" MoveRowToTableName="" PKName="ID_REC" PollMilliSeconds="5000" PollingPostProcessing="MoveRow" TableName="BOX_RESERVATION" Transaction="NOTransaction" numberOfRecords="" operationType="find" paramOrder="" sql="select ID_REC,ID_BOX,ORDER_DATE,BILL from BOX_RESERVATION"/>
+      </input>
+      <output name="outputFind">
+    <jdbc:output xmlns:jdbc="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/" returnPartName="part"/>
+      </output>
+    </operation>
+    <operation name="pollrecords">
+    <jdbc:operation xmlns:jdbc="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/"/>
+      <input name="inputPoll">
+    <jdbc:input xmlns:jdbc="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/" MarkColumnName="" MarkColumnValue="" MoveRowToTableName="" PKName="ID_REC" PollMilliSeconds="5000" PollingPostProcessing="Delete" TableName="BOX_RESERVATION" Transaction="NOTransaction" numberOfRecords="" operationType="poll" paramOrder="" sql="select ID_REC,ID_BOX,ORDER_DATE,BILL from BOX_RESERVATION"/>
+      </input>
+    </operation>
+  </binding>
+  <service name="service">
+    <port name="port" binding="tns:binding">
+    <jdbc:address xmlns:jdbc="http://schemas.sun.com/jbi/wsdl-extensions/jdbc/" jndiName="jdbc/javadb"/>
+    </port>
+  </service>
+    <plink:partnerLinkType xmlns:plink="http://docs.oasis-open.org/wsbpel/2.0/plnktype" name="jdbcpartner">
+        <plink:role name="jdbcPortTypeRole" portType="tns:jdbcPortType"/>
+    </plink:partnerLinkType>
+</definitions>

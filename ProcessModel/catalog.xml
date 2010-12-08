@@ -1,3 +1,20 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system"><nextCatalog catalog="src/jbiServiceUnits/META-INF/BoxService/catalog.xml"/>
-    
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <nextCatalog catalog="nbproject/private/cache/retriever/catalog.xml"/>
+    <system systemId="HotelService/HotelService.wsdl" uri="nb-uri:HotelService#src/HotelService.wsdl"/>
+    <system systemId="DinnerService/DinnerService.wsdl" uri="nb-uri:DinnerService#src/DinnerService.wsdl"/>
+    <system systemId="AgencyService/AgencyService.wsdl" uri="nb-uri:AgencyService#src/AgencyService.wsdl"/>
+    <system systemId="BoxService/BoxService.xsd" uri="nb-uri:BoxService#src/BoxService.xsd"/>
+    <system systemId="TravelService/TravelService.wsdl" uri="nb-uri:TravelService#src/TravelService.wsdl"/>
+    <system systemId="BoxService/BoxService.wsdl" uri="nb-uri:BoxService#src/BoxService.wsdl"/>
 </catalog>
+
+
+
+
+
+
+
+
+
+

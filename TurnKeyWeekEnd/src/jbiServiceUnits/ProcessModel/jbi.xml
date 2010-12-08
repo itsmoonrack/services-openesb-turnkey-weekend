@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jbi xmlns="http://java.sun.com/xml/ns/jbi" xmlns:ns0="http://enterprise.netbeans.org/bpel/ProcessModel/ReserveBox" xmlns:ns1="http://j2ee.netbeans.org/wsdl/ProcessModel/TurnKeyWeekEnd" xmlns:ns2="http://j2ee.netbeans.org/wsdl/BoxService" xmlns:ns3="http://j2ee.netbeans.org/wsdl/TravelService/TravelService" xmlns:ns4="http://j2ee.netbeans.org/wsdl/AgencyService/AgencyService" xmlns:ns5="http://j2ee.netbeans.org/wsdl/DinnerService/DinnerService" xmlns:ns6="http://j2ee.netbeans.org/wsdl/HotelService/HotelService" xmlns:ns7="http://enterprise.netbeans.org/bpel/ProcessModel/SearchBox" xmlns:ns8="http://www.sun.com/jbi/descriptor/service-unit" version="1.0">
+    <services binding-component="false">
+        <provides endpoint-name="TurnKeyWeekEndPortTypeRole_myRole" interface-name="ns1:TurnKeyWeekEndPortType" service-name="ns0:Reservation">
+            <ns8:display-name>Reservation</ns8:display-name>
+            <ns8:process-name>ReserveBox</ns8:process-name>
+            <ns8:file-path>ReserveBox.bpel</ns8:file-path>
+        </provides>
+        <provides endpoint-name="TurnKeyWeekEndPortTypeRole_myRole" interface-name="ns1:TurnKeyWeekEndPortType" service-name="ns7:Search">
+            <ns8:display-name>Search</ns8:display-name>
+            <ns8:process-name>SearchBox</ns8:process-name>
+            <ns8:file-path>SearchBox.bpel</ns8:file-path>
+        </provides>
+        <consumes endpoint-name="clientRole_partnerRole" interface-name="ns2:client" service-name="ns0:Box">
+            <ns8:display-name>Box</ns8:display-name>
+            <ns8:process-name>ReserveBox</ns8:process-name>
+            <ns8:file-path>ReserveBox.bpel</ns8:file-path>
+        </consumes>
+        <consumes endpoint-name="TravelServicePortTypeRole_partnerRole" interface-name="ns3:TravelServicePortType" service-name="ns0:Travel">
+            <ns8:display-name>Travel</ns8:display-name>
+            <ns8:process-name>ReserveBox</ns8:process-name>
+            <ns8:file-path>ReserveBox.bpel</ns8:file-path>
+        </consumes>
+        <consumes endpoint-name="AgencyServicePortTypeRole_partnerRole" interface-name="ns4:AgencyServicePortType" service-name="ns0:Agency">
+            <ns8:display-name>Agency</ns8:display-name>
+            <ns8:process-name>ReserveBox</ns8:process-name>
+            <ns8:file-path>ReserveBox.bpel</ns8:file-path>
+        </consumes>
+        <consumes endpoint-name="DinnerServicePortTypeRole_partnerRole" interface-name="ns5:DinnerServicePortType" service-name="ns0:Restaurant">
+            <ns8:display-name>Restaurant</ns8:display-name>
+            <ns8:process-name>ReserveBox</ns8:process-name>
+            <ns8:file-path>ReserveBox.bpel</ns8:file-path>
+        </consumes>
+        <consumes endpoint-name="HotelServicePortTypeRole_partnerRole" interface-name="ns6:HotelServicePortType" service-name="ns0:Hotel">
+            <ns8:display-name>Hotel</ns8:display-name>
+            <ns8:process-name>ReserveBox</ns8:process-name>
+            <ns8:file-path>ReserveBox.bpel</ns8:file-path>
+        </consumes>
+        <consumes endpoint-name="TravelServicePortTypeRole_partnerRole" interface-name="ns3:TravelServicePortType" service-name="ns7:Travel">
+            <ns8:display-name>Travel</ns8:display-name>
+            <ns8:process-name>SearchBox</ns8:process-name>
+            <ns8:file-path>SearchBox.bpel</ns8:file-path>
+        </consumes>
+        <consumes endpoint-name="clientRole_partnerRole" interface-name="ns2:client" service-name="ns7:Box">
+            <ns8:display-name>Box</ns8:display-name>
+            <ns8:process-name>SearchBox</ns8:process-name>
+            <ns8:file-path>SearchBox.bpel</ns8:file-path>
+        </consumes>
+    </services>
+</jbi>

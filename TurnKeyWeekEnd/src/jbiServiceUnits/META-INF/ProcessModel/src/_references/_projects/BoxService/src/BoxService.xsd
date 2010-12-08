@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://xml.netbeans.org/schema/BoxService"
+    xmlns:tns="http://xml.netbeans.org/schema/BoxService"
+    elementFormDefault="qualified">
+    <xsd:complexType name="Box">
+        <xsd:sequence>
+            <xsd:element name="id" type="xsd:int"></xsd:element>
+            <xsd:element name="address" type="xsd:string"></xsd:element>
+            <xsd:element name="startDate" type="xsd:dateTime"></xsd:element>
+            <xsd:element name="endDate" type="xsd:dateTime"></xsd:element>
+            <xsd:element name="description" type="xsd:string"></xsd:element>
+            <xsd:element name="price" type="xsd:double"></xsd:element>
+            <xsd:element name="travel_id" type="xsd:int"></xsd:element>
+            <xsd:element name="hotel_id" type="xsd:int"></xsd:element>
+            <xsd:element name="restaurant_id" type="xsd:int"></xsd:element>
+            <xsd:element name="activity_id" type="xsd:int"></xsd:element>
+            <xsd:element name="activity_type" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="BoxPreview">
+        <xsd:sequence>
+            <xsd:element name="box" type="tns:Box"></xsd:element>
+            <xsd:element name="hotelDetails" type="xsd:string"></xsd:element>
+            <xsd:element name="restaurantDetails" type="xsd:string"></xsd:element>
+            <xsd:element name="manifestationDetails" type="xsd:string"></xsd:element>
+            <xsd:element name="gmapDetails" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ListOfBoxPreviews">
+        <xsd:sequence>
+            <xsd:element name="boxes" type="tns:BoxPreview" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

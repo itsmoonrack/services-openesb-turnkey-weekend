@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jbi xmlns="http://java.sun.com/xml/ns/jbi" xmlns:ns0="http://enterprise.netbeans.org/bpel/TravelService/TravelService" xmlns:ns1="http://j2ee.netbeans.org/wsdl/TravelService/FindTravel" xmlns:ns2="http://j2ee.netbeans.org/wsdl/TravelService/ReserveTravel" xmlns:ns3="http://j2ee.netbeans.org/wsdl/TravelService/TravelService" xmlns:ns4="http://www.sun.com/jbi/descriptor/service-unit" version="1.0">
+    <services binding-component="false">
+        <provides endpoint-name="TravelServicePortTypeRole_myRole" interface-name="ns3:TravelServicePortType" service-name="ns0:Client">
+            <ns4:display-name>Client</ns4:display-name>
+            <ns4:process-name>TravelService</ns4:process-name>
+            <ns4:file-path>TravelService.bpel</ns4:file-path>
+        </provides>
+        <consumes endpoint-name="jdbcPortTypeRole_partnerRole" interface-name="ns1:jdbcPortType" service-name="ns0:PartnerLink2">
+            <ns4:display-name>PartnerLink2</ns4:display-name>
+            <ns4:process-name>TravelService</ns4:process-name>
+            <ns4:file-path>TravelService.bpel</ns4:file-path>
+        </consumes>
+        <consumes endpoint-name="jdbcPortTypeRole_partnerRole" interface-name="ns2:jdbcPortType" service-name="ns0:Reservation">
+            <ns4:display-name>Reservation</ns4:display-name>
+            <ns4:process-name>TravelService</ns4:process-name>
+            <ns4:file-path>TravelService.bpel</ns4:file-path>
+        </consumes>
+    </services>
+</jbi>

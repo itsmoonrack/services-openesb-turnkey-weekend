@@ -15,13 +15,12 @@
     <import namespace="http://j2ee.netbeans.org/wsdl/TravelService/FindIdTravel" location="BD/FindIdTravel.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <partnerLinks>
         <partnerLink name="PartnerLink2" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/FindTravel" partnerLinkType="tns:jdbcpartner" partnerRole="jdbcPortTypeRole"/>
-        <partnerLink name="PartnerLink3" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/ReserveTravel" partnerLinkType="tns:jdbcpartner" partnerRole="jdbcPortTypeRole"/>
-        <partnerLink name="PartnerLink4" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/FindIdTravel" partnerLinkType="tns:jdbcpartner" partnerRole="jdbcPortTypeRole"/>
-        <partnerLink name="PartnerLink1" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/TravelService" partnerLinkType="tns:TravelService" myRole="TravelServicePortTypeRole"/>
+        <partnerLink name="Reservation" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/ReserveTravel" partnerLinkType="tns:jdbcpartner" partnerRole="jdbcPortTypeRole"/>
+        <partnerLink name="Client" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/TravelService" partnerLinkType="tns:TravelService" myRole="TravelServicePortTypeRole"/>
     </partnerLinks>
     <variables>
-        <variable name="FindOut2" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/FindIdTravel" messageType="tns:outputMsg"/>
-        <variable name="FindIn2" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/FindIdTravel" messageType="tns:inputMsg"/>
+        <variable name="FindOut1" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/FindTravel" messageType="tns:outputMsg"/>
+        <variable name="FindIn1" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/FindTravel" messageType="tns:inputMsg"/>
         <variable name="InsertOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/ReserveTravel" messageType="tns:RetMsg"/>
         <variable name="InsertIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/ReserveTravel" messageType="tns:inputMsg"/>
         <variable name="ReserveTravelOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/TravelService" messageType="tns:reserveTravelOperationResponse"/>
@@ -33,7 +32,7 @@
     </variables>
     <sequence>
         <pick name="Pick1" createInstance="yes">
-            <onMessage partnerLink="PartnerLink1" operation="getTravelOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/TravelService" portType="tns:TravelServicePortType" variable="GetTravelOperationIn">
+            <onMessage partnerLink="Client" operation="getTravelOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/TravelService" portType="tns:TravelServicePortType" variable="GetTravelOperationIn">
                 <sequence name="Sequence1">
                     <assign name="AssignFind">
                         <copy>
@@ -79,20 +78,28 @@
                             </assign>
                         </else>
                     </if>
-                    <reply name="Reply1" partnerLink="PartnerLink1" operation="getTravelOperation" portType="tns:TravelServicePortType" variable="GetTravelOperationOut"/>
+                    <reply name="Reply1" partnerLink="Client" operation="getTravelOperation" portType="tns:TravelServicePortType" variable="GetTravelOperationOut"/>
                 </sequence>
             </onMessage>
-            <onMessage partnerLink="PartnerLink1" operation="reserveTravelOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/TravelService" portType="tns:TravelServicePortType" variable="ReserveTravelOperationIn">
+            <onMessage partnerLink="Client" operation="reserveTravelOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/TravelService" portType="tns:TravelServicePortType" variable="ReserveTravelOperationIn">
                 <sequence name="Sequence2">
                     <assign name="AssignFind2">
                         <copy>
-                            <from variable="ReserveTravelOperationIn" part="id"/>
-                            <to>$FindIn2.part/ns0:TRAVEL_Record/ns0:ID</to>
+                            <from variable="GetTravelOperationIn" part="locationFrom"/>
+                            <to>$FindIn1.part/ns0:TRAVEL_Record/ns0:LOCATIONFROM</to>
+                        </copy>
+                        <copy>
+                            <from variable="GetTravelOperationIn" part="locationTo"/>
+                            <to>$FindIn1.part/ns0:TRAVEL_Record/ns0:LOCATIONTO</to>
+                        </copy>
+                        <copy>
+                            <from variable="GetTravelOperationIn" part="date"/>
+                            <to>$FindIn1.part/ns0:TRAVEL_Record/ns0:DEPARTUREDATE</to>
                         </copy>
                     </assign>
-                    <invoke name="InvokeFind3" partnerLink="PartnerLink4" operation="find" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/FindIdTravel" portType="tns:jdbcPortType" inputVariable="FindIn2" outputVariable="FindOut2"/>
+                    <invoke name="InvokeFind3" partnerLink="PartnerLink2" operation="find" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/FindTravel" portType="tns:jdbcPortType" inputVariable="FindIn1" outputVariable="FindOut1"/>
                     <if name="IfTravel2">
-                        <condition>$FindOut2.part/ns0:TRAVEL_Record/ns0:ID = $ReserveTravelOperationIn.id and $FindOut2.part/ns0:TRAVEL_Record/ns0:DEPARTUREDATE = $ReserveTravelOperationIn.date</condition>
+                        <condition>$FindOut1.part/ns0:TRAVEL_Record/ns0:ID = $ReserveTravelOperationIn.id and $FindOut1.part/ns0:TRAVEL_Record/ns0:DEPARTUREDATE = $ReserveTravelOperationIn.date</condition>
                         <sequence name="Sequence3">
                             <assign name="AssignForInsert">
                                 <copy>
@@ -104,18 +111,18 @@
                                     <to>$InsertIn.part/ns0:TRAVEL_RESERVATION_Record/ns0:DATE</to>
                                 </copy>
                                 <copy>
-                                    <from>$FindOut2.part/ns0:TRAVEL_Record/ns0:PRICE * $ReserveTravelOperationIn.nbPerson</from>
+                                    <from>$FindOut1.part/ns0:TRAVEL_Record/ns0:PRICE * $ReserveTravelOperationIn.nbPerson</from>
                                     <to>$InsertIn.part/ns0:TRAVEL_RESERVATION_Record/ns0:TOTALPRICE</to>
                                 </copy>
                                 <copy>
-                                    <from>$FindOut2.part/ns0:TRAVEL_Record/ns0:ID</from>
+                                    <from>$FindOut1.part/ns0:TRAVEL_Record/ns0:ID</from>
                                     <to>$InsertIn.part/ns0:TRAVEL_RESERVATION_Record/ns0:ID_TRAVEL</to>
                                 </copy>
                             </assign>
-                            <invoke name="InvokeInsert" partnerLink="PartnerLink3" operation="insert" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/ReserveTravel" portType="tns:jdbcPortType" inputVariable="InsertIn" outputVariable="InsertOut"/>
+                            <invoke name="InvokeInsert" partnerLink="Reservation" operation="insert" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelService/ReserveTravel" portType="tns:jdbcPortType" inputVariable="InsertIn" outputVariable="InsertOut"/>
                             <assign name="AssignReponse">
                                 <copy>
-                                    <from>$FindOut2.part/ns0:TRAVEL_Record/ns0:PRICE * $ReserveTravelOperationIn.nbPerson</from>
+                                    <from>$FindOut1.part/ns0:TRAVEL_Record/ns0:PRICE * $ReserveTravelOperationIn.nbPerson</from>
                                     <to>$ReserveTravelOperationOut.result/ns1:totalPrice</to>
                                 </copy>
                                 <copy>
@@ -123,11 +130,11 @@
                                     <to>$ReserveTravelOperationOut.result/ns1:nbPerson</to>
                                 </copy>
                                 <copy>
-                                    <from>$FindOut2.part/ns0:TRAVEL_Record/ns0:ID</from>
+                                    <from>$FindOut1.part/ns0:TRAVEL_Record/ns0:ID</from>
                                     <to>$ReserveTravelOperationOut.result/ns1:id_travel</to>
                                 </copy>
                                 <copy>
-                                    <from>$FindOut2.part/ns0:TRAVEL_Record/ns0:DEPARTUREDATE</from>
+                                    <from>$FindOut1.part/ns0:TRAVEL_Record/ns0:DEPARTUREDATE</from>
                                     <to>$ReserveTravelOperationOut.result/ns1:date</to>
                                 </copy>
                             </assign>
@@ -141,12 +148,14 @@
                             </assign>
                         </else>
                     </if>
-                    <reply name="Reply2" partnerLink="PartnerLink1" operation="reserveTravelOperation" portType="tns:TravelServicePortType" variable="ReserveTravelOperationOut"/>
+                    <reply name="Reply2" partnerLink="Client" operation="reserveTravelOperation" portType="tns:TravelServicePortType" variable="ReserveTravelOperationOut"/>
                 </sequence>
             </onMessage>
         </pick>
     </sequence>
 </process>
+
+
 
 
 

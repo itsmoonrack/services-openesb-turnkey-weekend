@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jbi xmlns="http://java.sun.com/xml/ns/jbi" xmlns:ns1="http://j2ee.netbeans.org/wsdl/DinnerService/DinnerService" xmlns:ns10="http://enterprise.netbeans.org/bpel/ProcessModel/ReserveBox" xmlns:ns11="http://enterprise.netbeans.org/bpel/ProcessModel/SearchBox" xmlns:ns12="http://j2ee.netbeans.org/wsdl/AgencyService/AgencyService" xmlns:ns13="http://enterprise.netbeans.org/bpel/AgencyService/agencyService" xmlns:ns14="http://j2ee.netbeans.org/wsdl/AgencyService/ReserveManifestation" xmlns:ns15="http://j2ee.netbeans.org/wsdl/AgencyService/FindManifestation" xmlns:ns16="http://j2ee.netbeans.org/wsdl/AgencyService/FindManifestations" xmlns:ns2="http://enterprise.netbeans.org/bpel/DinnerService/dinnerService" xmlns:ns3="http://j2ee.netbeans.org/wsdl/BoxService" xmlns:ns4="http://enterprise.netbeans.org/bpel/BoxService/GetMatchingBoxes" xmlns:ns5="http://j2ee.netbeans.org/wsdl/HotelService/HotelService" xmlns:ns6="http://enterprise.netbeans.org/bpel/HotelService/hotelService" xmlns:ns7="http://enterprise.netbeans.org/bpel/BoxService/CreateBox" xmlns:ns8="http://j2ee.netbeans.org/wsdl/TravelService/TravelService" xmlns:ns9="http://enterprise.netbeans.org/bpel/TravelService/TravelService" version="1.0">
+    <services binding-component="true">
+        <provides endpoint-name="port" interface-name="ns14:jdbcPortType" service-name="ns14:service"/>
+        <provides endpoint-name="port" interface-name="ns15:jdbcPortType" service-name="ns15:service"/>
+        <provides endpoint-name="port" interface-name="ns16:jdbcPortType" service-name="ns16:service"/>
+        <consumes endpoint-name="port" interface-name="ns14:jdbcPortType" service-name="ns14:service"/>
+        <consumes endpoint-name="port" interface-name="ns15:jdbcPortType" service-name="ns15:service"/>
+        <consumes endpoint-name="port" interface-name="ns16:jdbcPortType" service-name="ns16:service"/>
+    </services>
+</jbi>

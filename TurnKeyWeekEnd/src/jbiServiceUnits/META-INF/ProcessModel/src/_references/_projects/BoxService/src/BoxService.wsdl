@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="BoxService" targetNamespace="http://j2ee.netbeans.org/wsdl/BoxService"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://j2ee.netbeans.org/wsdl/BoxService" xmlns:ns="http://xml.netbeans.org/schema/BoxService" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <types>
+        <xsd:schema targetNamespace="http://j2ee.netbeans.org/wsdl/BoxService">
+            <xsd:import namespace="http://xml.netbeans.org/schema/BoxService" schemaLocation="BoxService.xsd"/>
+        </xsd:schema>
+    </types>
+    <message name="getMatchingBoxesRequest">
+        <part name="location" type="xsd:string"/>
+        <part name="startDate" type="xsd:dateTime"/>
+        <part name="endDate" type="xsd:dateTime"/>
+    </message>
+    <message name="getMatchingBoxesResponse">
+        <part name="result" type="ns:ListOfBoxPreviews"/>
+    </message>
+    <message name="reserveBoxRequest">
+        <part name="id" type="xsd:int"/>
+    </message>
+    <message name="reserveBoxResponse">
+        <part name="box" type="ns:Box"/>
+    </message>
+    <message name="checkCredentialsRequest">
+        <part name="username" type="xsd:string"/>
+        <part name="password" type="xsd:string"/>
+    </message>
+    <message name="checkCredentialsResponse">
+        <part name="token" type="xsd:string"/>
+    </message>
+    <message name="createBoxRequest">
+        <part name="box" type="ns:Box"/>
+    </message>
+    <message name="createBoxResponse">
+        <part name="result" type="xsd:int"/>
+    </message>
+    <message name="readBoxRequest">
+        <part name="id" type="xsd:int"/>
+    </message>
+    <message name="readBoxResponse">
+        <part name="result" type="ns:Box"/>
+    </message>
+    <message name="updateBoxRequest">
+        <part name="box" type="ns:Box"/>
+    </message>
+    <message name="updateBoxResponse">
+        <part name="result" type="xsd:boolean"/>
+    </message>
+    <message name="deleteBoxRequest">
+        <part name="id" type="xsd:int"/>
+    </message>
+    <message name="deleteBoxResponse">
+        <part name="result" type="xsd:boolean"/>
+    </message>
+    <portType name="client">
+        <operation name="getMatchingBoxes">
+            <input name="input1" message="tns:getMatchingBoxesRequest"/>
+            <output name="output1" message="tns:getMatchingBoxesResponse"/>
+        </operation>
+        <operation name="reserveBox">
+            <input name="input2" message="tns:reserveBoxRequest"/>
+            <output name="output2" message="tns:reserveBoxResponse"/>
+        </operation>
+    </portType>
+    <portType name="administrator">
+        <operation name="checkCredentials">
+            <input name="input1" message="tns:checkCredentialsRequest"/>
+            <output name="output1" message="tns:checkCredentialsResponse"/>
+        </operation>
+        <operation name="createBox">
+            <input name="input2" message="tns:createBoxRequest"/>
+            <output name="output2" message="tns:createBoxResponse"/>
+        </operation>
+        <operation name="readBox">
+            <input name="input3" message="tns:readBoxRequest"/>
+            <output name="output3" message="tns:readBoxResponse"/>
+        </operation>
+        <operation name="updateBox">
+            <input name="input4" message="tns:updateBoxRequest"/>
+            <output name="output4" message="tns:updateBoxResponse"/>
+        </operation>
+        <operation name="deleteBox">
+            <input name="input5" message="tns:deleteBoxRequest"/>
+            <output name="output5" message="tns:deleteBoxResponse"/>
+        </operation>
+    </portType>
+    <binding name="clientBinding" type="tns:client">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getMatchingBoxes">
+            <soap:operation/>
+            <input name="input1">
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/BoxService"/>
+            </input>
+            <output name="output1">
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/BoxService"/>
+            </output>
+        </operation>
+        <operation name="reserveBox">
+            <soap:operation/>
+            <input name="input2">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output2">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <binding name="administratorBinding" type="tns:administrator">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="checkCredentials">
+            <soap:operation/>
+            <input name="input1">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output1">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="createBox">
+            <soap:operation/>
+            <input name="input2">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output2">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="readBox">
+            <soap:operation/>
+            <input name="input3">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output3">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="updateBox">
+            <soap:operation/>
+            <input name="input4">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output4">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="deleteBox">
+            <soap:operation/>
+            <input name="input5">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output5">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="BoxService">
+        <port name="clientPort" binding="tns:clientBinding">
+            <soap:address location="http://localhost:${HttpDefaultPort}/BoxService/clientPort"/>
+        </port>
+        <port name="adminPort" binding="tns:administratorBinding">
+            <soap:address location="http://localhost:${HttpDefaultPort}/BoxService/adminPort"/>
+        </port>
+    </service>
+    <plnk:partnerLinkType name="clientPartnerLink">
+        <!-- A partner link type is automatically generated when a new port type is added. Partner link types are used by BPEL processes.
+In a BPEL process, a partner link represents the interaction between the BPEL process and a partner service. Each partner link is associated with a partner link type.
+A partner link type characterizes the conversational relationship between two services. The partner link type can have one or two roles.-->
+        <plnk:role name="clientRole" portType="tns:client"/>
+    </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="adminPartnerLink">
+        <plnk:role name="administratorRole" portType="tns:administrator"/>
+    </plnk:partnerLinkType>
+</definitions>
+
+
+
+
+
+
+

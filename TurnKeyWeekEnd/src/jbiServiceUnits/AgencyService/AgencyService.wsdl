@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="AgencyService" targetNamespace="http://j2ee.netbeans.org/wsdl/AgencyService/AgencyService"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://j2ee.netbeans.org/wsdl/AgencyService/AgencyService" xmlns:ns="http://xml.netbeans.org/schema/AgencyService" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <types>
+        <xsd:schema targetNamespace="http://j2ee.netbeans.org/wsdl/AgencyService/AgencyService">
+            <xsd:import namespace="http://xml.netbeans.org/schema/AgencyService" schemaLocation="AgencyService.xsd"/>
+        </xsd:schema>
+    </types>
+    <message name="getManifestationOperationRequest">
+        <part name="id" type="xsd:int"/>
+    </message>
+    <message name="getManifestationOperationResponse">
+        <part name="result" type="ns:Manifestation"/>
+    </message>
+    <message name="reserveManifestationOperationRequest">
+        <part name="id" type="xsd:int"/>
+        <part name="date" type="xsd:date"/>
+        <part name="nbTicket" type="xsd:int"/>
+    </message>
+    <message name="reserveManifestationOperationResponse">
+        <part name="result" type="ns:ManifestationReservation"/>
+    </message>
+    <message name="getManifestationsOperationRequest">
+        <part name="location" type="xsd:string"/>
+        <part name="date" type="xsd:date"/>
+    </message>
+    <message name="getManifestationsOperationResponse">
+        <part name="results" type="ns:ListOfManifestations"/>
+    </message>
+    <portType name="AgencyServicePortType">
+        <operation name="getManifestationOperation">
+            <input name="input1" message="tns:getManifestationOperationRequest"/>
+            <output name="output1" message="tns:getManifestationOperationResponse"/>
+        </operation>
+        <operation name="reserveManifestationOperation">
+            <input name="input2" message="tns:reserveManifestationOperationRequest"/>
+            <output name="output2" message="tns:reserveManifestationOperationResponse"/>
+        </operation>
+        <operation name="getManifestationsOperation">
+            <input name="input3" message="tns:getManifestationsOperationRequest"/>
+            <output name="output3" message="tns:getManifestationsOperationResponse"/>
+        </operation>
+    </portType>
+    <binding name="AgencyServiceBinding" type="tns:AgencyServicePortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getManifestationOperation">
+            <soap:operation/>
+            <input name="input1">
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/AgencyService/AgencyService"/>
+            </input>
+            <output name="output1">
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/AgencyService/AgencyService"/>
+            </output>
+        </operation>
+        <operation name="reserveManifestationOperation">
+            <input name="input2">
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/AgencyService/AgencyService"/>
+            </input>
+            <output name="output2">
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/AgencyService/AgencyService"/>
+            </output>
+        </operation>
+        <operation name="getManifestationsOperation">
+            <input name="input3">
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/AgencyService/AgencyService"/>
+            </input>
+            <output name="output3">
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/AgencyService/AgencyService"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="AgencyServiceService">
+        <port name="AgencyServicePort" binding="tns:AgencyServiceBinding">
+            <soap:address location="http://localhost:${HttpDefaultPort}/AgencyServiceService/AgencyServicePort"/>
+        </port>
+    </service>
+    <plnk:partnerLinkType name="AgencyService">
+        <!-- A partner link type is automatically generated when a new port type is added. Partner link types are used by BPEL processes.
+In a BPEL process, a partner link represents the interaction between the BPEL process and a partner service. Each partner link is associated with a partner link type.
+A partner link type characterizes the conversational relationship between two services. The partner link type can have one or two roles.-->
+        <plnk:role name="AgencyServicePortTypeRole" portType="tns:AgencyServicePortType"/>
+    </plnk:partnerLinkType>
+</definitions>
+
+
+

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="DinnerService" targetNamespace="http://j2ee.netbeans.org/wsdl/DinnerService/DinnerService"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://j2ee.netbeans.org/wsdl/DinnerService/DinnerService" xmlns:ns="http://xml.netbeans.org/schema/DinnerService" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <types>
+        <xsd:schema targetNamespace="http://j2ee.netbeans.org/wsdl/DinnerService/DinnerService">
+            <xsd:import namespace="http://xml.netbeans.org/schema/DinnerService" schemaLocation="DinnerService.xsd"/>
+        </xsd:schema>
+    </types>
+    <message name="getRestaurantOperationRequest">
+        <part name="id" type="xsd:int"/>
+    </message>
+    <message name="getRestaurantOperationResponse">
+        <part name="result" type="ns:Restaurant"/>
+    </message>
+    <message name="reserveRestaurantOperationRequest">
+        <part name="id" type="xsd:int"/>
+        <part name="date" type="xsd:date"/>
+        <part name="nbPerson" type="xsd:int"/>
+    </message>
+    <message name="reserveRestaurantOperationResponse">
+        <part name="result" type="ns:RestaurantReservation"/>
+    </message>
+    <message name="getRestaurantsOperationRequest">
+        <part name="location" type="xsd:string"/>
+        <part name="type" type="xsd:string"/>
+    </message>
+    <message name="getRestaurantsOperationResponse">
+        <part name="results" type="ns:ListOfRestaurants"/>
+    </message>
+    <portType name="DinnerServicePortType">
+        <operation name="getRestaurantOperation">
+            <input name="input1" message="tns:getRestaurantOperationRequest"/>
+            <output name="output1" message="tns:getRestaurantOperationResponse"/>
+        </operation>
+        <operation name="reserveRestaurantOperation">
+            <input name="input2" message="tns:reserveRestaurantOperationRequest"/>
+            <output name="output2" message="tns:reserveRestaurantOperationResponse"/>
+        </operation>
+        <operation name="getRestaurantsOperation">
+            <input name="input3" message="tns:getRestaurantsOperationRequest"/>
+            <output name="output3" message="tns:getRestaurantsOperationResponse"/>
+        </operation>
+    </portType>
+    <binding name="DinnerServiceBinding" type="tns:DinnerServicePortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getRestaurantOperation">
+            <soap:operation/>
+            <input name="input1">
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/DinnerService/DinnerService"/>
+            </input>
+            <output name="output1">
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/DinnerService/DinnerService"/>
+            </output>
+        </operation>
+        <operation name="reserveRestaurantOperation">
+            <input name="input2">
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/DinnerService/DinnerService"/>
+            </input>
+            <output name="output2">
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/DinnerService/DinnerService"/>
+            </output>
+        </operation>
+        <operation name="getRestaurantsOperation">
+            <input name="input3">
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/DinnerService/DinnerService"/>
+            </input>
+            <output name="output3">
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/DinnerService/DinnerService"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="DinnerServiceService">
+        <port name="DinnerServicePort" binding="tns:DinnerServiceBinding">
+            <soap:address location="http://localhost:${HttpDefaultPort}/DinnerServiceService/DinnerServicePort"/>
+        </port>
+    </service>
+    <plnk:partnerLinkType name="DinnerService">
+        <!-- A partner link type is automatically generated when a new port type is added. Partner link types are used by BPEL processes.
+In a BPEL process, a partner link represents the interaction between the BPEL process and a partner service. Each partner link is associated with a partner link type.
+A partner link type characterizes the conversational relationship between two services. The partner link type can have one or two roles.-->
+        <plnk:role name="DinnerServicePortTypeRole" portType="tns:DinnerServicePortType"/>
+    </plnk:partnerLinkType>
+</definitions>
+
+
+
+
